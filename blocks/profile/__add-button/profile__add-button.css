@@ -1,0 +1,13 @@
+.profile__add-button {
+  margin:auto;
+}
+@media (min-width: 320px) {
+  .profile__add-button {
+    width: 16px;
+    }
+}
+@media (min-width: 581px) {
+  .profile__add-button {
+    width: 22px;
+  }
+}

@@ -1,0 +1,18 @@
+.profile__info {
+}
+@media (min-width: 320px) {
+  .profile__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+@media (min-width: 581px) {
+  .profile__info {
+    display: grid;
+    max-width: 600px;
+    grid-template-columns: 120px auto;
+    grid-template-rows: auto auto;
+  }
+}

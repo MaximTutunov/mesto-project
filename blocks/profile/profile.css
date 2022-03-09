@@ -1,0 +1,20 @@
+.profile {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+@media (min-width: 320px) {
+  .profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+@media (min-width: 581px) {
+  .profile {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

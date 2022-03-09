@@ -1,0 +1,27 @@
+.popup__close-button{
+display: none;
+    position: fixed;
+z-index: 2;
+background-image: url(../../../images/close_icon.svg);
+}
+@media (min-width: 320px) {
+    .popup__close-button {
+        top: calc(50vh - 197px);
+        left: calc(50vw + 121px);
+        width: 20px;
+        height:20px;
+        background-size: 20px;
+        object-fit: cover;
+    }
+  }
+  
+  @media (min-width: 581px) {
+    .popup__close-button {
+        top: calc(50vh - 205px);
+        left: calc(50vw + 223px);
+        width: 32px;
+        height:32px;
+        background-size: 32px;
+    }
+  }
+

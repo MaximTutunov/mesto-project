@@ -1,0 +1,8 @@
+.elements__like{
+    width: 22px;
+    height: 19px;
+    margin-bottom: 5px;
+}
+.elements__like:hover{
+    opacity: 50%;
+}

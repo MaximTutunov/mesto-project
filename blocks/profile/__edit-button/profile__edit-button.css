@@ -1,0 +1,11 @@
+.profile__edit-button {
+  grid-column: 3;
+  grid-row: 1;
+  width: 24px;
+  height: 24px;
+  align-self: end;
+  padding-left: 18px;
+}
+.profile__edit-button:hover{
+  opacity:60%;
+}
