@@ -1,14 +1,19 @@
 .header {
-  width: 100%;
+  border-bottom: 1px solid rgba(84, 84, 84, 1);
+  opacity: 70%;
 }
 @media (min-width: 320px) {
   .header {
     margin-top: 28px;
+    height: 56px;
+    margin-bottom: 38px;
   }
 }
 @media (min-width: 581px) {
   .header {
-    margin-top: 45px auto 0px;
+    margin-top: 45px;
+    margin-bottom: 36px;
     max-width: 880px;
+    height: 74px;
   }
 }

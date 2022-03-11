@@ -2,7 +2,6 @@
   background: #ffffff;
   border-radius: 10px;
   position: fixed;
-  font-family: Inter;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -11,13 +10,13 @@
 @media (min-width: 320px) {
   .popup__container {
     width: 282px;
-    height: 322px;
+    min-height: 322px;
   }
 }
 
 @media (min-width: 581px) {
   .popup__container {
     width: 430px;
-    height: 330px;
+    min-height: 330px;
   }
 }

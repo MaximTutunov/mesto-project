@@ -2,10 +2,13 @@
   color: #000000;
   font-style: normal;
   font-weight: 900;
+  margin:0;
+  padding:0;
 }
 
 @media (min-width: 320px) {
   .popup__title {
+    width: 238px;   
     margin-top: 25px;
     margin-left: 22px;
     margin-bottom: 75px;
@@ -17,6 +20,7 @@
 
 @media (min-width: 581px) {
   .popup__title {
+    width: 358px;
     margin-left: 36px;
     margin-top: 34px;
     margin-bottom: 54px;

@@ -1,110 +1,128 @@
 <!DOCTYPE html>
 <html lang="ru">
-
-<head>
-  <link rel="stylesheet" href="index.css" />
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mesto</title>
-</head>
-
-<body class="body">
-  <div class="page">
-    <header class="header">
-      <img src="images/logo.svg" alt="Логотип Место" class="header__logo" />
-    </header>
-    <main>
-    <section class="profile">
-      <div class="profile__info">
-        <img src="images/custeau.jpg" alt="Фотография Жак-Ив Кусто" class="profile__image" />
-        <div class="profile__container">
-          <div class="profile__title">Жак-Ив Кусто</div>
-          <a href="#" target="_blank">
-            <img src="images/Edit_Button.svg" alt="кнопка редактирования" class="profile__edit-button" />
-          </a>
+  <head>
+    <link rel="stylesheet" href="pages/index.css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mesto</title>
+  </head>
+  <body class="body">
+    <div class="page">
+      <header class="header">
+        <img src="images/logo.svg" alt="Логотип Место" class="header__logo" />
+      </header>
+      <main>
+        <section class="profile">
+          <div class="profile__info">
+            <img
+              src="images/custeau.jpg"
+              alt="Фотография Жак-Ив Кусто"
+              class="profile__image"
+            />
+            <div class="profile__container">
+              <h1 class="profile__title">Жак-Ив Кусто</h1>
+              <button type="button" class="profile__edit-button"></button>
+            </div>
+            <p class="profile__subtitle">Исследователь океана</p>
+          </div>
+          <button type="button" class="profile__add-button"></button>           
+        </section>
+        <section class="elements">
+          <div class="elements__element">
+            <img
+              src="images/Karachaevsk.jpg"
+              alt="старая церковь в Карачаевске"
+              class="elements__image"
+            />
+            <div class="elements__container">
+              <h2 class="elements__title">Карачаевск</h2>
+              <button type="button" class="elements__like"></button>
+            </div>
+          </div>
+          <div class="elements__element">
+            <img
+              src="images/elbrus.jpg"
+              alt="вид на гору Эльбрус"
+              class="elements__image"
+            />
+            <div class="elements__container">
+              <h2 class="elements__title">Гора Эльбрус</h2>
+              <button type="button" class="elements__like"></button>
+            </div>
+          </div>
+          <div class="elements__element">
+            <img
+              src="images/dombay.jpg"
+              alt="горы Домбая"
+              class="elements__image"
+            />
+            <div class="elements__container">
+              <h2 class="elements__title">Домбай</h2>
+              <button type="button" class="elements__like"></button>
+            </div>
+          </div>
+          <div class="elements__element">
+            <img
+              src="images/elbrus2.jpg"
+              alt="вид на гору Эльбрус"
+              class="elements__image"
+            />
+            <div class="elements__container">
+              <h2 class="elements__title">Гора Эльбрус</h2>
+              <button type="button" class="elements__like"></button>
+            </div>
+          </div>
+          <div class="elements__element">
+            <img
+              src="images/dombay2.jpg"
+              alt="горы Домбая"
+              class="elements__image"
+            />
+            <div class="elements__container">
+              <h2 class="elements__title">Домбай</h2>
+              <button type="button" class="elements__like"></button>
+            </div>
+          </div>
+          <div class="elements__element">
+            <img
+              src="images/kch.jpg"
+              alt="старая церковь в Карачаево-Черкессии"
+              class="elements__image"
+            />
+            <div class="elements__container">
+              <h2 class="elements__title">Карачаево-Черкессия</h2>
+              <button type="button" class="elements__like"></button>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer class="footer">
+        <p class="footer__copyright">© 2022. Mesto Russia</p>
+      </footer>
+      <div class="popup">
+        <div class="popup__container">
+          <button type="button" class="popup__close-button "></button>
+          <h2 class="popup__title">Редактировать профиль</h2>
+          <form class="popup__form" name="popup-form">
+            <input
+              type="text"
+              class="popup__input"
+              id="first_name"
+              name="first_name"
+              value="Жак-Ив Кусто"
+            />
+            <input
+              type="text"
+              id="profession"
+              class="popup__input"
+              name="profession"
+              value="Исследователь океана"
+            />
+            <button type="button" class="popup__submit-button">Сохранить</button>
+            </form>
         </div>
-        <div class="profile__subtitle">Исследователь океана</div>
-      </div>
-      <a href="#" target="blank" class="profile__add-button-container">
-        <img src="images/plus.svg" alt="кнопка добавить" class="profile__add-button" />
-      </a>
-    </section>
-    <div class="popup popup_opened">
-      <div class="popup__container">
-        <div class="popup__title">Редактировать профиль</div>
-        <form class="popup__form">
-          <input type="text" id="first_name" style="border: 0px" name="first_name" value="Жак-Ив Кусто">
-        </form>
-        <form class="popup__form">
-          <input type="text" id="profession" style="border: 0px" name="profession" value="Исследователь океана">
-        </form>
-        <a href="#" target="_blank" class="popup__submit-button-container">
-          <div class="popup__submit-button">Сохранить</div>
-        </a>
       </div>
     </div>
-    <div class="popup__close-button popup_opened"></div>
-    <section class="elements">
-    <div class="elements__element">
-      <img src="images/Karachaevsk.jpg" alt="старая церковь в Карачаевске" class="elements__image" />
-      <div class="elements__container">
-        <div class="elements__title">Карачаевск</div>
-        <a href="#" target="blank">
-          <img src="images/like.svg" alt="кнопка Лайк" class="elements__like" />
-        </a>
-      </div>
-    </div>
-    <div class="elements__element">
-      <img src="images/elbrus.jpg" alt="вид на гору Эльбрус" class="elements__image" />
-      <div class="elements__container">
-        <div class="elements__title">Гора Эльбрус</div>
-        <a href="#" target="blank">
-          <img src="images/like.svg" alt="кнопка Лайк" class="elements__like" />
-        </a>
-      </div>
-    </div>
-    <div class="elements__element">
-      <img src="images/dombay.jpg" alt="горы Домбая" class="elements__image" />
-      <div class="elements__container">
-        <div class="elements__title">Домбай</div>
-        <a href="#" target="blank">
-          <img src="images/like.svg" alt="кнопка Лайк" class="elements__like" />
-        </a>
-      </div>
-    </div>
-    <div class="elements__element">
-      <img src="images/elbrus2.jpg" alt="вид на гору Эльбрус" class="elements__image" />
-      <div class="elements__container">
-        <div class="elements__title">Гора Эльбрус</div>
-        <a href="#" target="blank">
-          <img src="images/like.svg" alt="кнопка Лайк" class="elements__like" />
-        </a>
-      </div>
-    </div>
-    <div class="elements__element">
-      <img src="images/dombay2.jpg" alt="горы Домбая" class="elements__image" />
-      <div class="elements__container">
-        <div class="elements__title">Домбай</div>
-        <a href="#" target="blank">
-          <img src="images/like.svg" alt="кнопка Лайк" class="elements__like" />
-        </a>
-      </div>
-    </div>
-    <div class="elements__element">
-      <img src="images/kch.jpg" alt="старая церковь в Карачаево-Черкессии" class="elements__image" />
-      <div class="elements__container">
-        <div class="elements__title">Карачаево-Черкессия</div>
-        <a href="#" target="blank">
-          <img src="images/like.svg" alt="кнопка Лайк" class="elements__like" />
-        </a>
-      </div>
-    </div>
-  </section>
-</main>
-  <footer class="footer">
-    <p class="footer__copyright">© 2022. Mesto Russia</p>
-  </footer>
-  </div>
-</body>
+  </body>
 </html>

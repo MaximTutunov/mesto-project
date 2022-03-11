@@ -2,22 +2,22 @@
   display: grid;
   justify-content: center;
   gap: 20px 17px;
-  margin-top: 47px;
 }
 
 @media (min-width: 320px) {
   .elements {
     grid-template-columns: repeat(1, 288px);
+    margin-top: 36px;
   }
 }
-@media (min-width: 581px) {
+@media (min-width: 600px) {
   .elements {
     grid-template-columns: repeat(2, 282px);
+    margin-top: 47px;
   }
 }
-@media (min-width: 880px) {
+@media (min-width: 900px) {
   .elements {
     grid-template-columns: repeat(3, 282px);
   }
 }
-

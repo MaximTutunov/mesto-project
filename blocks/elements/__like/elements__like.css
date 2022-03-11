@@ -1,8 +1,15 @@
-.elements__like{
-    width: 22px;
-    height: 19px;
-    margin-bottom: 5px;
+.elements__like {
+  background: none;
+  background-image: url("../../../images/like.svg");
+  width: 22px;
+  height: 19px;
+  margin-bottom: 5px;
+  padding: 0;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-position: center;
 }
-.elements__like:hover{
-    opacity: 50%;
+.elements__like:hover {
+  opacity: 50%;
 }

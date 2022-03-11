@@ -1,13 +1,11 @@
 .popup__form {
-  font-family: inherit;
-  font-size: inherit;
   border: 0px;
 }
 @media (min-width: 320px) {
   .popup__form {
+    width: 238px;
     margin-bottom: 30px;
     margin-left: 22px;
-    border-bottom: 1px solid rgba(0, 0, 0, 1);
     width: 238px;
   }
 }
@@ -16,7 +14,6 @@
   .popup__form {
     margin-left: 36px;
     margin-bottom: 43px;
-    border-bottom: 1px solid rgba(0, 0, 0, 1);
     width: 358px;
   }
 }

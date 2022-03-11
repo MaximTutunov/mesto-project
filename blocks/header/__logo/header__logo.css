@@ -1,6 +1,5 @@
 .header__logo {
-  
-  }
+}
 @media (min-width: 320px) {
   .header__logo {
     width: 103.74px;
@@ -11,10 +10,9 @@
 }
 @media (min-width: 581px) {
   .header__logo {
-    margin-left: 10px;
+    margin-left: 0px;
     width: 142px;
     height: 33px;
-    padding-bottom: 41px;
+    padding-bottom: 0px;
   }
 }
-
