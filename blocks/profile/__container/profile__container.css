@@ -4,6 +4,7 @@
 }
 @media (min-width: 581px) {
   .profile__container {
+padding-top: 9px;   
     margin-left: 30px;
     align-items: end;
   }
