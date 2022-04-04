@@ -7,122 +7,114 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mesto</title>
   </head>
+
   <body class="body">
-    <div class="page">
+    <page class="page">
       <header class="header">
         <img src="images/logo.svg" alt="Логотип Место" class="header__logo" />
       </header>
+
       <main>
         <section class="profile">
-          <div class="profile__info">
-            <img
-              src="images/custeau.jpg"
-              alt="Фотография Жак-Ив Кусто"
-              class="profile__image"
-            />
-            <div class="profile__container">
-              <h1 class="profile__title">Жак-Ив Кусто</h1>
-              <button type="button" class="profile__edit-button"></button>
-            </div>
-            <p class="profile__subtitle">Исследователь океана</p>
+          <img
+            src="images/custeau.jpg"
+            alt="Фотография Жак-Ива Кусто"
+            class="profile__image"
+          />
+          <div class="profile__container">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <button type="button" class="profile__button-edit"></button>
           </div>
-          <button type="button" class="profile__add-button"></button>           
+          <p class="profile__profession">Исследователь океана</p>
+
+          <button type="button" class="profile__button-add"></button>
         </section>
-        <section class="elements">
-          <div class="elements__element">
-            <img
-              src="images/Karachaevsk.jpg"
-              alt="старая церковь в Карачаевске"
-              class="elements__image"
-            />
-            <div class="elements__container">
-              <h2 class="elements__title">Карачаевск</h2>
-              <button type="button" class="elements__like"></button>
-            </div>
-          </div>
-          <div class="elements__element">
-            <img
-              src="images/elbrus.jpg"
-              alt="вид на гору Эльбрус"
-              class="elements__image"
-            />
-            <div class="elements__container">
-              <h2 class="elements__title">Гора Эльбрус</h2>
-              <button type="button" class="elements__like"></button>
-            </div>
-          </div>
-          <div class="elements__element">
-            <img
-              src="images/dombay.jpg"
-              alt="горы Домбая"
-              class="elements__image"
-            />
-            <div class="elements__container">
-              <h2 class="elements__title">Домбай</h2>
-              <button type="button" class="elements__like"></button>
-            </div>
-          </div>
-          <div class="elements__element">
-            <img
-              src="images/elbrus2.jpg"
-              alt="вид на гору Эльбрус"
-              class="elements__image"
-            />
-            <div class="elements__container">
-              <h2 class="elements__title">Гора Эльбрус</h2>
-              <button type="button" class="elements__like"></button>
-            </div>
-          </div>
-          <div class="elements__element">
-            <img
-              src="images/dombay2.jpg"
-              alt="горы Домбая"
-              class="elements__image"
-            />
-            <div class="elements__container">
-              <h2 class="elements__title">Домбай</h2>
-              <button type="button" class="elements__like"></button>
-            </div>
-          </div>
-          <div class="elements__element">
-            <img
-              src="images/kch.jpg"
-              alt="старая церковь в Карачаево-Черкессии"
-              class="elements__image"
-            />
-            <div class="elements__container">
-              <h2 class="elements__title">Карачаево-Черкессия</h2>
-              <button type="button" class="elements__like"></button>
-            </div>
-          </div>
+
+        <section class="gallery">
+          <figure class="gallery__container">
+            <template class="gallery__template">
+              <div class="gallery__item">
+                <button type="button" class="gallery__button-del"></button>
+                <img src="" alt="" class="gallery__photo" />
+                <figcaption class="gallery__photo-caption">
+                  <p class="gallery__caption"></p>
+                  <button type="button" class="gallery__button-like"></button>
+                </figcaption>
+              </div>
+            </template>
+          </figure>
         </section>
       </main>
+
       <footer class="footer">
         <p class="footer__copyright">© 2022. Mesto Russia</p>
       </footer>
-      <div class="popup">
+
+      <div class="popup popup_edit">
         <div class="popup__container">
-          <button type="button" class="popup__close-button "></button>
+          <button class="popup__button-close" type="button"></button>
           <h2 class="popup__title">Редактировать профиль</h2>
-          <form class="popup__form" name="popup-form">
-            <input
-              type="text"
-              class="popup__input"
-              id="first_name"
-              name="first_name"
-              value="Жак-Ив Кусто"
-            />
-            <input
-              type="text"
-              id="profession"
-              class="popup__input"
-              name="profession"
-              value="Исследователь океана"
-            />
-            <button type="button" class="popup__submit-button">Сохранить</button>
-            </form>
+          <form class="popup__form" name="popup-edit" action="#">
+            <fieldset class="popup__fieldset">
+              <input
+                type="text"
+                class="popup__form-text"
+                id="name"
+                name="name"
+                placeholder="Жак-Ив Кусто"
+              />
+              <input
+                type="text"
+                class="popup__form-text"
+                id="profession"
+                name="profession"
+                placeholder="Исследователь океана"
+              />
+              <button type="submit" class="popup__button-save">
+                Сохранить
+              </button>
+            </fieldset>
+          </form>
         </div>
       </div>
-    </div>
+
+      <div class="popup popup_add">
+        <div class="popup__container">
+          <button class="popup__button-close" type="button"></button>
+          <h2 class="popup__title">Новое место</h2>
+          <form class="popup__form" name="popup-add" action="#">
+            <fieldset class="popup__fieldset">
+              <input
+                class="popup__form-text"
+                type="text"
+                placeholder="Название"
+                name="name"
+                id="place"
+              />
+              <input
+                class="popup__form-text"
+                type="text"
+                placeholder="Ссылка на картинку"
+                name="about"
+                id="link"
+              />
+              <button class="popup__button-save" type="submit" value="Создать">
+                Создать
+              </button>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+
+      <div class="popup popup_enlarged-image">
+        <div class="popup__container popup__container_image">
+          <button type="button" class="popup__button-close"></button>
+          <img src="#" alt="#" class="popup__image" />
+          <h2 class="popup__image-capture">Подпись</h2>
+        </div>
+      </div>
+
+      <script type="text/javascript" src="index.js"></script>
+    </page>
   </body>
 </html>

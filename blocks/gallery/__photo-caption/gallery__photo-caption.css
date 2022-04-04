@@ -1,0 +1,7 @@
+.gallery__photo-caption {
+    padding: 25px 20px 27px 21px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+}

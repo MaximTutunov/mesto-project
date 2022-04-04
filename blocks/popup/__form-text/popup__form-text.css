@@ -1,0 +1,29 @@
+.popup__form-text {
+    border: none;
+    text-overflow: ellipsis;
+    padding: 0 0 10px 0;
+    font-size: 14px;
+    line-height: 17px;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+    min-width: 238px;
+    max-height: 14px;
+}
+
+.popup__form-text:last-of-type {
+    margin-top: 32px;
+}
+
+.popup__form-text::placeholder {
+    color: #C4C4C4;
+}
+
+@media screen and (min-width:960px) {
+    .popup__form-text {
+        min-width: 358px;
+    }
+}
+
+.popup__form-text:focus {
+    outline: none;
+    border-bottom: 1px solid black;
+}

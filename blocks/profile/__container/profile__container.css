@@ -1,11 +1,14 @@
 .profile__container {
   display: flex;
-  justify-content: space-between;
+  align-items: baseline;
+  padding-top: 26px;
 }
-@media (min-width: 581px) {
+
+@media screen and (min-width: 960px) {
   .profile__container {
-padding-top: 9px;   
-    margin-left: 30px;
-    align-items: end;
+    grid-column: 2/3;
+    grid-row: 1/2;
+    align-self: end;
+    padding-top: 0;
   }
 }
