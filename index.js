@@ -1,4 +1,7 @@
 //edit 
+/*import {initialCards} from './constants.js';*/
+
+
 
 const popupEdit = document.querySelector(".popup_edit");
 const buttonEdit = document.querySelector(".profile__button-edit");
@@ -12,13 +15,13 @@ const linkSubmit = popupAdd.querySelector("#link");
 
 const profileName = document.querySelector(".profile__name");
 const profileProfession = document.querySelector(".profile__profession");
-const formElement = popupEdit.querySelector(".popup__form");
+const formProfileElement = popupEdit.querySelector(".popup__form");
 
 const nameInput = popupEdit.querySelector("#name");
 const professionInput = popupEdit.querySelector("#profession");
 
 const buttonSave = document.querySelector(".popup__button-save");
-const buttonClose = document.querySelectorAll(".popup__button-close");
+const popupsCloseButtons = document.querySelectorAll(".popup__button-close");
 // 6 cards from array
 
 const cardTemplate = document.querySelector(".gallery__template").content;
@@ -36,32 +39,7 @@ const popupInputs = popupAdd.querySelectorAll(".popup__form-text");
 const imagePopup = popupImage.querySelector(".popup__image");
 const imageCapture = popupImage.querySelector(".popup__image-capture");
 
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
+
 
 //FUNCTIONS
 
@@ -76,7 +54,7 @@ buttonAdd.addEventListener("click", () => {
 function closePopup(popupName) {
   popupName.classList.remove("popup_opened");
 }
-buttonClose.forEach((close) =>
+popupsCloseButtons.forEach((close) =>
   close.addEventListener("click", () => {
     const openedPopup = document.querySelector(".popup_opened");
     closePopup(openedPopup);
@@ -90,14 +68,14 @@ buttonEdit.addEventListener("click", () => {
   professionInput.value = profileProfession.textContent;
 });
 
-function formSubmitHandler(evt) {
+function submitProfileForm(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileProfession.textContent = professionInput.value;
   closePopup(popupEdit);
 }
 
-formElement.addEventListener("submit", formSubmitHandler);
+formProfileElement.addEventListener("submit", submitProfileForm);
 
 //adding 6 cards from array + listeners
 
@@ -145,7 +123,8 @@ function resetInput() {
   popupInputs.forEach((item) => (item.value = ""));
 }
 
-//creating and submitting card
+
+//creating and submitting card*/
 
 popupAdd.addEventListener("submit", (evt) => {
   evt.preventDefault();
