@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
-    <link rel="stylesheet" href="pages/index.css" />
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mesto</title>
+    <meta
+      name="description"
+      content="проект 5 спринта на Яндекс Практикуме. Валидация форм. Сборка WebPack"
+    />
+    <meta name="keywords" content="html, css, JavaScript" />
+    <meta name="author" content="Maxim Tutunov" />
   </head>
 
   <body class="body">
     <page class="page">
       <header class="header">
-        <img src="images/logo.svg" alt="Логотип Место" class="header__logo" />
+        <img src="<%=require('./images/logo.svg')%>" alt="Логотип Место" class="header__logo" />
       </header>
 
       <main>
         <section class="profile">
           <img
-            src="images/custeau.jpg"
+            src="<%=require('./images/custeau.jpg')%>"
             alt="Фотография Жак-Ива Кусто"
             class="profile__image"
           />
@@ -45,7 +50,6 @@
           </figure>
         </section>
       </main>
-
       <footer class="footer">
         <p class="footer__copyright">© 2022. Mesto Russia</p>
       </footer>
@@ -54,23 +58,27 @@
         <div class="popup__container">
           <button class="popup__button-close" type="button"></button>
           <h2 class="popup__title">Редактировать профиль</h2>
-          <form class="popup__form" name="popup-edit" action="#">
+          <form class="popup__form" name="popup-edit" novalidate>
             <fieldset class="popup__fieldset">
               <input
                 type="text"
-                class="popup__form-text"
+                class="popup__input"
                 id="name"
                 name="name"
                 placeholder="Жак-Ив Кусто"
+                minlength="2" maxlength="40" required
               />
+              <span class="popup__error" id="name-error"></span>
               <input
                 type="text"
-                class="popup__form-text"
-                id="profession"
+                class="popup__input"
+                id="description"
                 name="profession"
                 placeholder="Исследователь океана"
+                minlength="2" maxlength="200" required
               />
-              <button type="submit" class="popup__button-save">
+              <span class="popup__error" id="description-error"></span>
+              <button type="submit" class="popup__button">
                 Сохранить
               </button>
             </fieldset>
@@ -82,23 +90,27 @@
         <div class="popup__container">
           <button class="popup__button-close" type="button"></button>
           <h2 class="popup__title">Новое место</h2>
-          <form class="popup__form" name="popup-add" action="#">
+          <form class="popup__form" name="popup-add">
             <fieldset class="popup__fieldset">
               <input
-                class="popup__form-text"
+                class="popup__input"
                 type="text"
                 placeholder="Название"
                 name="name"
-                id="place"
+                id="add-card-title"
+                minlength="2" maxlength="30" required
               />
+              <span class="popup__error" id="add-card-title-error"></span>
               <input
-                class="popup__form-text"
-                type="text"
+                class="popup__input"
+                type="url"
                 placeholder="Ссылка на картинку"
                 name="about"
-                id="link"
+                id="add-card-link"
+                required
               />
-              <button class="popup__button-save" type="submit" value="Создать">
+              <span class="popup__error" id="add-card-link-error"></span>
+              <button class="popup__button" type="submit" value="Создать">
                 Создать
               </button>
             </fieldset>
@@ -113,9 +125,6 @@
           <h2 class="popup__image-capture">Подпись</h2>
         </div>
       </div>
-      <script type="text/javascript" src="constants.js"></script>
-      <script type="text/javascript" src="index.js"></script>
-
     </page>
   </body>
 </html>
