@@ -24,42 +24,6 @@ const initialCards = [
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
   },
 ];
-/*
-const arImg = new URL('https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg', import.meta.url);
-const chImg = new URL('https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg', import.meta.url);
-const ivImg = new URL('https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg', import.meta.url);
-const kmImg = new URL('https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg', import.meta.url);
-const hmrImg = new URL('https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg', import.meta.url);
-const bkImg = new URL('https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg', import.meta.url);
-
-const initialCards = [
-  {
-    name: "Архыз",
-    link: arImg,
-  },
-  {
-    name: "Челябинская область",
-    link: chImg,
-  },
-  {
-    name: "Иваново",
-    link: ivImg,
-  },
-  {
-    name: "Камчатка",
-    link:kmImg,
-  },
-  {
-    name: "Холмогорский район",
-    link: hmrImg,
-  },
-  {
-    name: "Байкал",
-    link: bkImg,
-  },
-];
-*/
-
 
 const popupEdit = document.querySelector(".popup_edit");
 const buttonEdit = document.querySelector(".profile__button-edit");
@@ -92,11 +56,13 @@ const popupImage = document.querySelector(".popup_enlarged-image");
 
 //for resetting
 const popupInputs = popupAdd.querySelectorAll(".popup__input-text");
+const popupReset = popupAdd.querySelector(".popup__form");
 
 //Opening large image
 
 const imagePopup = popupImage.querySelector(".popup__image");
 const imageCapture = popupImage.querySelector(".popup__image-capture");
+
 
 export {
   initialCards,
@@ -119,5 +85,7 @@ export {
   popupImage,
   popupInputs,
   imagePopup,
-  imageCapture
+  imageCapture,
+  popupReset,
+  
 };

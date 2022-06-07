@@ -1,4 +1,4 @@
-import '../pages/index.css'
+import "../pages/index.css";
 
 //import of constants
 
@@ -15,54 +15,40 @@ import {
   formProfileElement,
   nameInput,
   professionInput,
-  buttonSave,
   popupsCloseButtons,
   popupsAll,
-  cardTemplate,
   cardsContainer,
-  popupImage,
   popupInputs,
-  imagePopup,
-  imageCapture,
+  popupReset,
 } from "./constants.js";
 
 //import of functions
 
 import { enableValidation } from "./validate.js";
 
-import {
-  openPopup,
-  closeEscPopup,
-  closePopup,
-  submitProfileForm,
-  resetInput,
-  createCard, 
-} from "./card.js";
+import { createCard } from "./card.js";
 
-//open&close
+import { openPopup, closePopup } from "./modal.js";
+
+//Listener open&close
 
 buttonAdd.addEventListener("click", () => {
   openPopup(popupAdd);
 });
 
-popupsCloseButtons.forEach((close) =>
-  close.addEventListener("click", () => {
-    const openedPopup = document.querySelector(".popup_opened");
-    closePopup(openedPopup);
-  })
-);
 
-//close popup on overlay clicking
-
-popupsAll.forEach((popup) => {
-  popup.addEventListener("mousedown", (evt) => {
-    if (evt.target.classList.contains("popup")) {
-      closePopup(popup);
-    }
-  });
-});
 
 //EDIT POPUP and Submit
+function submitProfileForm(evt) {
+  evt.preventDefault();
+  profileName.textContent = nameInput.value;
+  profileProfession.textContent = professionInput.value;
+  closePopup(popupEdit);
+}
+
+
+
+//Listener EDIT POPUP and Submit
 buttonEdit.addEventListener("click", () => {
   openPopup(popupEdit);
   nameInput.value = profileName.textContent;
@@ -77,16 +63,15 @@ initialCards.forEach((item) =>
   cardsContainer.append(createCard(item.name, item.link))
 );
 
-//creating and submitting card*/
+//Listenercreating and submitting card*/
+
 
 popupAdd.addEventListener("submit", (evt) => {
   evt.preventDefault();
   cardsContainer.prepend(createCard(nameSubmit.value, linkSubmit.value));
   closePopup(popupAdd);
-  resetInput();
+  popupReset.reset();
 });
-
-
 
 // enabling validation
 
@@ -98,3 +83,4 @@ enableValidation({
   inputErrorClass: "popup__input_type_error",
   errorClass: "popup__error_visible",
 });
+
