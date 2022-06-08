@@ -58,6 +58,12 @@ const popupImage = document.querySelector(".popup_enlarged-image");
 const popupInputs = popupAdd.querySelectorAll(".popup__input-text");
 const popupReset = popupAdd.querySelector(".popup__form");
 
+//for blocking empty sending after successful submit 
+const submitButtonSelectorAdd = "#add-button";
+const formEdit = document.querySelector("#add-form");
+const buttonElementAdd = formEdit.querySelector(submitButtonSelectorAdd);
+const inactiveButtonClassAdd = "popup__button_disabled";
+
 //Opening large image
 
 const imagePopup = popupImage.querySelector(".popup__image");
@@ -87,5 +93,8 @@ export {
   imagePopup,
   imageCapture,
   popupReset,
-  
-};
+  submitButtonSelectorAdd,
+  formEdit,
+  buttonElementAdd,
+  inactiveButtonClassAdd
+  };

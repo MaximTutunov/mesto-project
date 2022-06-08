@@ -20,11 +20,14 @@ import {
   cardsContainer,
   popupInputs,
   popupReset,
+  formEdit,
+  buttonElementAdd,
+  inactiveButtonClassAdd
 } from "./constants.js";
 
 //import of functions
 
-import { enableValidation } from "./validate.js";
+import { enableValidation, toggleButtonState } from "./validate.js";
 
 import { createCard } from "./card.js";
 
@@ -36,8 +39,6 @@ buttonAdd.addEventListener("click", () => {
   openPopup(popupAdd);
 });
 
-
-
 //EDIT POPUP and Submit
 function submitProfileForm(evt) {
   evt.preventDefault();
@@ -45,8 +46,6 @@ function submitProfileForm(evt) {
   profileProfession.textContent = professionInput.value;
   closePopup(popupEdit);
 }
-
-
 
 //Listener EDIT POPUP and Submit
 buttonEdit.addEventListener("click", () => {
@@ -63,7 +62,7 @@ initialCards.forEach((item) =>
   cardsContainer.append(createCard(item.name, item.link))
 );
 
-//Listenercreating and submitting card*/
+//Listenercreating and submitting card
 
 
 popupAdd.addEventListener("submit", (evt) => {
@@ -71,6 +70,7 @@ popupAdd.addEventListener("submit", (evt) => {
   cardsContainer.prepend(createCard(nameSubmit.value, linkSubmit.value));
   closePopup(popupAdd);
   popupReset.reset();
+  toggleButtonState(formEdit, buttonElementAdd, inactiveButtonClassAdd);
 });
 
 // enabling validation
@@ -83,4 +83,3 @@ enableValidation({
   inputErrorClass: "popup__input_type_error",
   errorClass: "popup__error_visible",
 });
-
