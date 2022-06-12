@@ -16,16 +16,23 @@
   <body class="body">
     <page class="page">
       <header class="header">
-        <img src="<%=require('./images/logo.svg')%>" alt="Логотип Место" class="header__logo" />
+        <img
+          src="<%=require('./images/logo.svg')%>"
+          alt="Логотип Место"
+          class="header__logo"
+        />
       </header>
 
       <main>
         <section class="profile">
-          <img
-            src="<%=require('./images/custeau.jpg')%>"
-            alt="Фотография Жак-Ива Кусто"
-            class="profile__image"
-          />
+          <button class="profile__edit-avatar">
+            <img
+              src="#"
+              alt="аватар"
+              class="profile__avatar"
+            />
+            <span class="profile__change-avatar"></span>
+          </button>
           <div class="profile__container">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
             <button type="button" class="profile__button-edit"></button>
@@ -43,7 +50,10 @@
                 <img src="" alt="" class="gallery__photo" />
                 <figcaption class="gallery__photo-caption">
                   <p class="gallery__caption"></p>
-                  <button type="button" class="gallery__button-like"></button>
+                  <div>
+                    <button type="button" class="gallery__button-like"></button>
+                    <p class="gallery__likes-counter"></p>
+                  </div>
                 </figcaption>
               </div>
             </template>
@@ -66,7 +76,9 @@
                 id="name"
                 name="name"
                 placeholder="Жак-Ив Кусто"
-                minlength="2" maxlength="40" required
+                minlength="2"
+                maxlength="40"
+                required
               />
               <span class="popup__error" id="name-error"></span>
               <input
@@ -75,12 +87,12 @@
                 id="description"
                 name="profession"
                 placeholder="Исследователь океана"
-                minlength="2" maxlength="200" required
+                minlength="2"
+                maxlength="200"
+                required
               />
               <span class="popup__error" id="description-error"></span>
-              <button type="submit" class="popup__button">
-                Сохранить
-              </button>
+              <button type="submit" class="popup__button">Сохранить</button>
             </fieldset>
           </form>
         </div>
@@ -98,7 +110,9 @@
                 placeholder="Название"
                 name="name"
                 id="add-card-title"
-                minlength="2" maxlength="30" required
+                minlength="2"
+                maxlength="30"
+                required
               />
               <span class="popup__error" id="add-card-title-error"></span>
               <input
@@ -110,14 +124,53 @@
                 required
               />
               <span class="popup__error" id="add-card-link-error"></span>
-              <button class="popup__button" type="submit" value="Создать" id="add-button">
+              <button
+                class="popup__button"
+                type="submit"
+                value="Создать"
+                id="add-button"
+              >
                 Создать
               </button>
             </fieldset>
           </form>
         </div>
       </div>
+      <!--Avatar Update Form-->
+      <div id="popup-avatar-edit" class="popup">
+        <div class="popup__container">
+          <h2 class="popup__title">Обновить фотографию</h2>
+          <form
+            id="popup-avatar-form"
+            name="avatar-save"
+            class="popup__form"
+            novalidate
+          >
+            <fieldset class="popup__fieldset">
+              <input
+                id="add-avatar-link"
+                type="url"
+                name="link"
+                placeholder="Ссылка на фото"
+                value=""
+                class="popup__input"
+                required
+              />
+              <span class="popup__error" id="add-avatar-link-error"></span>
 
+              <button
+                id="popup-avatar_save-button"
+                type="submit"
+                class="popup__button"
+              >
+                Сохранить
+              </button>
+            </fieldset>
+          </form>
+          <button type="button" class="popup__button-close"></button>
+        </div>
+      </div>
+      <!--Enlarged Image Popup-->
       <div class="popup popup_enlarged-image">
         <div class="popup__container popup__container_image">
           <button type="button" class="popup__button-close"></button>
