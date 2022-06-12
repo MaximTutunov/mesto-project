@@ -11,4 +11,4 @@
 
 Проект собран с использованием WebPack, Babel
 
-
+Сайт доступен по адресу https://maximtutunov.github.io/mesto-project/

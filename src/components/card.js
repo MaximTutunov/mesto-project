@@ -3,37 +3,89 @@ import {
   imagePopup,
   imageCapture,
   popupImage,
-  } from "./constants.js";
+  cardsContainer,
+} from "./constants.js";
 
-  import { openPopup} from "./modal.js";
+import { openPopup } from "./modal.js";
 
-//adding 6 cards from array + listeners
+import { deleteCard, likeCard } from "./api.js";
 
-const createCard = (name, link) => {
+function like(evt, likeShow, cardID) {
+
+  let method ='';
+
+  if (evt.target.classList.contains("gallery__button-liked")) {
+    method = 'DELETE';
+  } else {
+    method = 'PUT';
+  }
+
+  likeCard(cardID, method)
+    .then((data) => {
+      evt.target.classList.toggle("gallery__button-liked");
+      likeShow.textContent = data.likes.length;
+    })
+    .catch((err) => {
+      console.log("Ошибка. Запрос не выполнен:", err);
+    });
+}
+
+function del(event) {
+  const target = event.target;
+  target.closest(".gallery__item").remove();
+}
+
+const createCard = (
+  placeLinkValue,
+  placeDescriptionValue,
+  likes,
+  myId,
+  cardOwnerID,
+  cardID,
+  likesOwnerID
+) => {
   const cardElement = cardTemplate
     .querySelector(".gallery__item")
     .cloneNode(true);
 
   const cardImage = cardElement.querySelector(".gallery__photo");
-  cardElement.querySelector(".gallery__caption").textContent = name;
-  cardImage.setAttribute("src", link);
-  cardImage.setAttribute("alt", name);
+  const likeCount = cardElement.querySelector(".gallery__likes-counter");
+  likeCount.textContent = `${likes}`;
+  const deleteButton = cardElement.querySelector(".gallery__button-del");
+  const likeButton = cardElement.querySelector(".gallery__button-like");
+  cardElement.querySelector(".gallery__caption").textContent =
+    placeDescriptionValue;
+  cardImage.setAttribute("src", placeLinkValue);
+  cardImage.setAttribute("alt", placeDescriptionValue);
 
-  cardElement
-    .querySelector(".gallery__button-like")
-    .addEventListener("click", function (evt) {
-      classListToggle (evt);
+  // setting LIKES
+ if(likesOwnerID.includes(myId)){
+  likeButton.classList.add('gallery__button-liked')
+ }
+
+  likeButton.addEventListener("click", function (evt) {
+      like(evt, likeCount, cardID);
     });
 
-  cardElement
-    .querySelector(".gallery__button-del")
-    .addEventListener("click", function (evt) {
-      evt.target.closest(".gallery__item").remove();
+  ///delete
+  if (myId === cardOwnerID) {
+    deleteButton.addEventListener("click", function (event) {
+      deleteCard(cardID)
+        .then(() => {
+          del(event);
+        })
+        .catch((err) => {
+          console.log("Ошибка. Запрос не выполнен:", err);
+        });
     });
+  } else {
+    deleteButton.remove();
+  }
 
-  
+ 
+
   cardImage.addEventListener("click", () => {
-    openPopupImage(link, name);
+    openPopupImage(placeLinkValue, placeDescriptionValue);
   });
 
   return cardElement;
@@ -46,8 +98,27 @@ function openPopupImage(imageLink, header) {
   openPopup(popupImage);
 }
 
-function classListToggle (evt) {evt.target.classList.toggle("gallery__button-liked")};
+function addPrependCard(
+  placeLinkValue,
+  placeDescriptionValue,
+  likes,
+  myId,
+  cardOwnerID,
+  cardID,
+  likesOwnerID
+) {
+  
+  const cardElement = createCard(
+    placeLinkValue,
+    placeDescriptionValue,
+    likes,
+    myId,
+    cardOwnerID,
+    cardID,
+    likesOwnerID
+  );
 
+  cardsContainer.prepend(cardElement);
+}
 
-
-export {createCard };
+export { createCard, addPrependCard };

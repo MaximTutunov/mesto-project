@@ -1,30 +1,3 @@
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
-
 const popupEdit = document.querySelector(".popup_edit");
 const buttonEdit = document.querySelector(".profile__button-edit");
 
@@ -34,10 +7,23 @@ const popupAdd = document.querySelector(".popup_add");
 
 const nameSubmit = popupAdd.querySelector("#add-card-title");
 const linkSubmit = popupAdd.querySelector("#add-card-link");
+const formElementAddCard = popupAdd.querySelector('#add-form');
 
 const profileName = document.querySelector(".profile__name");
 const profileProfession = document.querySelector(".profile__profession");
+
+const profileAvatar =document.querySelector('.profile__avatar');
+
+const editAvatarBtn = document.querySelector('.profile__edit-avatar');
+const editAvatarBtnActive = document.querySelector('.profile__change-avatar')
+const popupAvatar = document.querySelector('#popup-avatar-edit');
+const avatarForm = popupAvatar.querySelector('#popup-avatar-form')
+const avatarInput = avatarForm.querySelector('#add-avatar-link');
+const popupSaveAvatarButton = popupAvatar.querySelector('#popup-avatar_save-button');
+
 const formProfileElement = popupEdit.querySelector(".popup__form");
+
+
 
 const nameInput = popupEdit.querySelector("#name");
 const professionInput = popupEdit.querySelector("#description");
@@ -47,7 +33,7 @@ const popupsCloseButtons = document.querySelectorAll(".popup__button-close");
 
 const popupsAll = Array.from(document.querySelectorAll(".popup"));
 
-// 6 cards from array
+// template
 
 const cardTemplate = document.querySelector(".gallery__template").content;
 const cardsContainer = document.querySelector(".gallery__container");
@@ -71,7 +57,6 @@ const imageCapture = popupImage.querySelector(".popup__image-capture");
 
 
 export {
-  initialCards,
   popupEdit,
   buttonEdit,
   buttonAdd,
@@ -96,5 +81,13 @@ export {
   submitButtonSelectorAdd,
   formEdit,
   buttonElementAdd,
-  inactiveButtonClassAdd
+  inactiveButtonClassAdd,
+  profileAvatar,
+  formElementAddCard,
+  editAvatarBtn,
+  editAvatarBtnActive,
+  popupAvatar,
+  avatarForm,
+  avatarInput,
+  popupSaveAvatarButton
   };
