@@ -1,4 +1,3 @@
-
 const config = {
   baseUrl: "https://mesto.nomoreparties.co/v1/plus-cohort-10/",
   headers: {
@@ -23,14 +22,12 @@ function getCards() {
   );
 }
 
-function deleteCard (cardID){
+function deleteCard(cardID) {
   return fetch(`${config.baseUrl}cards/${cardID}`, {
     method: "DELETE",
     headers: config.headers,
-    })
-    .then(checkResponse);
+  }).then(checkResponse);
 }
-
 
 function editProfileInfo(nameInputValue, professionInputValue) {
   return fetch(`${config.baseUrl}users/me`, {
@@ -43,39 +40,41 @@ function editProfileInfo(nameInputValue, professionInputValue) {
   }).then(checkResponse);
 }
 
-
-
-function addCard (placeLinkValue, placeDescriptionValue){
- 
+function addCard(placeLinkValue, placeDescriptionValue) {
   return fetch(`${config.baseUrl}cards`, {
     method: "POST",
     headers: config.headers,
     body: JSON.stringify({
       name: `${placeDescriptionValue}`,
       link: `${placeLinkValue}`,
-    })
+    }),
   }).then(checkResponse);
 }
 
-function likeCard (cardID, method){
-  
+function likeCard(cardID, method) {
   return fetch(`${config.baseUrl}cards/likes/${cardID}`, {
     method: method,
     headers: config.headers,
-        })
-    .then(checkResponse);
+  }).then(checkResponse);
 }
 
-function editAvatar(avatarInputValue){
+function editAvatar(avatarInputValue) {
   return fetch(`${config.baseUrl}users/me/avatar`, {
-    method: 'PATCH',
+    method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
-          avatar: `${avatarInputValue}`,
-          })
-    
-})
-.then(checkResponse)
+      avatar: `${avatarInputValue}`,
+    }),
+  }).then(checkResponse);
 }
 
-export { getUserInfo, getCards, editProfileInfo, addCard, config, deleteCard, likeCard, editAvatar };
+export {
+  getUserInfo,
+  getCards,
+  editProfileInfo,
+  addCard,
+  config,
+  deleteCard,
+  likeCard,
+  editAvatar,
+};

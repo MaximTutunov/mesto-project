@@ -16,7 +16,7 @@ import { editProfileInfo } from "./api.js";
 
 import { addCard, editAvatar } from "./api.js";
 
-import { addPrependCard } from "./card.js";
+import { addItem } from "./card.js";
 
 //open&close
 
@@ -39,7 +39,6 @@ function closePopup(popupName) {
 function submitProfileForm(evt) {
   evt.preventDefault();
 
-  
   const nameInputValue = nameInput.value;
   const profileProfessionValue = professionInput.value;
   renderLoading(true, evt);
@@ -82,7 +81,6 @@ function handlePlaceFormSubmit(
   placeLinkValue,
   placeDescriptionValue
 ) {
-  
   addCard(placeLinkValue, placeDescriptionValue)
     .then((data) => {
       const like = data.likes;
@@ -92,7 +90,7 @@ function handlePlaceFormSubmit(
       like.forEach((element) => {
         likesOwnerID.push(element._id);
       });
-      addPrependCard(
+      addItem(
         placeLinkValue,
         placeDescriptionValue,
         like.length,

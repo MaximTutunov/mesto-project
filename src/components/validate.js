@@ -40,7 +40,6 @@ const toggleButtonState = (
   buttonElement,
   inactiveButtonClass
 ) => {
-  
   const isFormValid = formIndividual.checkValidity();
   buttonElement.classList.toggle(inactiveButtonClass, !isFormValid);
   buttonElement.disabled = !isFormValid;
@@ -49,16 +48,11 @@ const toggleButtonState = (
 // setting Listeners
 
 const setEventListeners = (formIndividual, subConfig) => {
-  const {
-    inputSelector,
-    submitButtonSelector,
-    inactiveButtonClass,
-  
-  } = subConfig;
+  const { inputSelector, submitButtonSelector, inactiveButtonClass } =
+    subConfig;
 
   const inputList = Array.from(formIndividual.querySelectorAll(inputSelector));
 
-  
   const buttonElement = formIndividual.querySelector(submitButtonSelector);
   toggleButtonState(formIndividual, buttonElement, inactiveButtonClass);
 
@@ -77,12 +71,8 @@ const enableValidation = (subConfig) => {
   const { formSelector, ...restProps } = subConfig;
   const formsAll = Array.from(document.querySelectorAll(formSelector));
   formsAll.forEach((form) => {
-    form.addEventListener(
-      "submit",
-      setEventListeners(form, subConfig)
-    );
-    
+    form.addEventListener("submit", setEventListeners(form, subConfig));
   });
 };
 
-export { enableValidation, toggleButtonState};
+export { enableValidation, toggleButtonState };
