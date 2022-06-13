@@ -8,29 +8,14 @@ import {
 
 import { openPopup } from "./modal.js";
 
-import { deleteCard, likeCard } from "./api.js";
+import { deleteHandler, likeHandler } from "./index.js";
 
-function like(evt, likeShow, cardID) {
-
-  let method ='';
-
-  if (evt.target.classList.contains("gallery__button-liked")) {
-    method = 'DELETE';
-  } else {
-    method = 'PUT';
-  }
-
-  likeCard(cardID, method)
-    .then((data) => {
-      evt.target.classList.toggle("gallery__button-liked");
-      likeShow.textContent = data.likes.length;
-    })
-    .catch((err) => {
-      console.log("Ошибка. Запрос не выполнен:", err);
-    });
+function like(evt, likeShow, data) {
+  evt.target.classList.toggle("gallery__button-liked");
+  likeShow.textContent = data.likes.length;
 }
 
-function del(event) {
+function deleteCardFromDom(event) {
   const target = event.target;
   target.closest(".gallery__item").remove();
 }
@@ -59,30 +44,22 @@ const createCard = (
   cardImage.setAttribute("alt", placeDescriptionValue);
 
   // setting LIKES
- if(likesOwnerID.includes(myId)){
-  likeButton.classList.add('gallery__button-liked')
- }
+  if (likesOwnerID.includes(myId)) {
+    likeButton.classList.add("gallery__button-liked");
+  }
 
   likeButton.addEventListener("click", function (evt) {
-      like(evt, likeCount, cardID);
-    });
+    likeHandler(evt, cardID, likeCount);
+  });
 
   ///delete
   if (myId === cardOwnerID) {
     deleteButton.addEventListener("click", function (event) {
-      deleteCard(cardID)
-        .then(() => {
-          del(event);
-        })
-        .catch((err) => {
-          console.log("Ошибка. Запрос не выполнен:", err);
-        });
+      deleteHandler(event, cardID);
     });
   } else {
     deleteButton.remove();
   }
-
- 
 
   cardImage.addEventListener("click", () => {
     openPopupImage(placeLinkValue, placeDescriptionValue);
@@ -98,7 +75,7 @@ function openPopupImage(imageLink, header) {
   openPopup(popupImage);
 }
 
-function addPrependCard(
+function addItem(
   placeLinkValue,
   placeDescriptionValue,
   likes,
@@ -107,7 +84,6 @@ function addPrependCard(
   cardID,
   likesOwnerID
 ) {
-  
   const cardElement = createCard(
     placeLinkValue,
     placeDescriptionValue,
@@ -121,4 +97,4 @@ function addPrependCard(
   cardsContainer.prepend(cardElement);
 }
 
-export { createCard, addPrependCard };
+export { createCard, addItem, like, deleteCardFromDom };

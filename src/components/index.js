@@ -23,14 +23,13 @@ import {
   editAvatarBtnActive,
   popupAvatar,
   avatarForm,
-  profileAvatar
 } from "./constants.js";
 
 //import of functions
 
 import { enableValidation, toggleButtonState } from "./validate.js";
 
-import { addPrependCard } from "./card.js";
+import { like, deleteCardFromDom } from "./card.js";
 
 import {
   openPopup,
@@ -42,7 +41,8 @@ import {
   hiddenEditBtn,
 } from "./modal.js";
 
-import { getUserInfo, getCards,  } from "./api.js";
+import { getUserInfo, getCards, likeCard, deleteCard } from "./api.js";
+import { updateUserInfo, renderItems } from "../utils/utils.js";
 
 //Listener open&close
 
@@ -63,6 +63,32 @@ buttonAdd.addEventListener("click", () => {
   openPopup(popupAdd);
 });
 
+export const likeHandler = (evt, cardID, likeCount) => {
+  let method = "";
+  if (evt.target.classList.contains("gallery__button-liked")) {
+    method = "DELETE";
+  } else {
+    method = "PUT";
+  }
+  likeCard(cardID, method)
+    .then((data) => {
+      like(evt, likeCount, data);
+    })
+    .catch((err) => {
+      console.log("Ошибка. Запрос не выполнен: из индекс", err);
+    });
+};
+
+export const deleteHandler = (event, cardID) => {
+  deleteCard(cardID)
+    .then(() => {
+      deleteCardFromDom(event);
+    })
+    .catch((err) => {
+      console.log("Ошибка. Запрос не выполнен:", err);
+    });
+};
+
 popupAdd.addEventListener("submit", (evt) => {
   evt.preventDefault();
   handlePlaceFormSubmit(
@@ -71,8 +97,7 @@ popupAdd.addEventListener("submit", (evt) => {
     linkSubmit.value,
     nameSubmit.value
   );
-  
-  
+
   closePopup(popupAdd);
   popupReset.reset();
   toggleButtonState(formEdit, buttonElementAdd, inactiveButtonClassAdd);
@@ -80,54 +105,34 @@ popupAdd.addEventListener("submit", (evt) => {
 
 //AVATAR Listeners
 
-editAvatarBtn.addEventListener('mouseover', ()=>{
-  showEditBtn(editAvatarBtnActive)
-})
-
-editAvatarBtn.addEventListener('mouseout', () => {
-  hiddenEditBtn(editAvatarBtnActive)})
-
-  editAvatarBtn.addEventListener('click', ()=>{
-    openPopup(popupAvatar);
-    avatarForm.reset();
-    toggleButtonState(formEdit, buttonElementAdd, inactiveButtonClassAdd);
-  });
-
-avatarForm.addEventListener('submit', (evt)=>{
-  evt.preventDefault();
-  toggleButtonState(formEdit, buttonElementAdd, inactiveButtonClassAdd);
-  handleAvatarFormSubmit(evt, avatarForm)
-})
-
-
-
-
-Promise.all([getUserInfo(), getCards()]).then(([userData, cardsData]) => {
-  profileName.textContent = userData.name;
-  profileProfession.textContent = userData.about;
-  profileAvatar.src = userData.avatar;
-
-  for (let i = 0; i < cardsData.length; i++) {
-
-    const like = cardsData[i].likes;
-    const cardOwnerID= cardsData[i].owner._id;
-    const cardID=cardsData[i]._id;
-    const likesOwnerID = [];
-    
-    like.forEach(element => {
-      likesOwnerID.push(element._id);
-    })
-
-
-    addPrependCard(cardsData[i].link, cardsData[i].name, like.length, userData._id, cardOwnerID,
-      cardID, likesOwnerID);
-    
-  }
-})
-.catch((err) => {
-  console.log("Ошибка. Запрос не выполнен:", err);
+editAvatarBtn.addEventListener("mouseover", () => {
+  showEditBtn(editAvatarBtnActive);
 });
 
+editAvatarBtn.addEventListener("mouseout", () => {
+  hiddenEditBtn(editAvatarBtnActive);
+});
+
+editAvatarBtn.addEventListener("click", () => {
+  openPopup(popupAvatar);
+  avatarForm.reset();
+  toggleButtonState(formEdit, buttonElementAdd, inactiveButtonClassAdd);
+});
+
+avatarForm.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+  toggleButtonState(formEdit, buttonElementAdd, inactiveButtonClassAdd);
+  handleAvatarFormSubmit(evt, avatarForm);
+});
+
+Promise.all([getUserInfo(), getCards()])
+  .then(([userData, cardsData]) => {
+    updateUserInfo(userData, cardsData);
+    renderItems(userData, cardsData);
+  })
+  .catch((err) => {
+    console.log("Ошибка. Запрос не выполнен:", err);
+  });
 
 // enabling validation
 
@@ -139,5 +144,3 @@ enableValidation({
   inputErrorClass: "popup__input_type_error",
   errorClass: "popup__error_visible",
 });
-
-
