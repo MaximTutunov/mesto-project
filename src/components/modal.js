@@ -10,6 +10,7 @@ import {
   avatarInput,
   popupAvatar,
   inactiveButtonClassAdd,
+  popupAdd
 } from "./constants.js";
 
 import { editProfileInfo } from "./api.js";
@@ -99,6 +100,7 @@ function handlePlaceFormSubmit(
         cardID,
         likesOwnerID
       );
+      closePopup(popupAdd);
     })
     .catch((err) => console.log("Ошибка. Запрос не выполнен:", err))
     .finally(() => {

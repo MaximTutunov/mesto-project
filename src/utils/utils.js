@@ -4,6 +4,9 @@ import {
   profileAvatar,
 } from "../components/constants.js";
 import { addItem } from "../components/card.js";
+import {  likeCard, deleteCard } from "../components/api.js";
+import {  like, deleteCardFromDom} from "../components/card.js";
+
 export const updateUserInfo = (userData, cardsData) => {
   profileName.textContent = userData.name;
   profileProfession.textContent = userData.about;
@@ -31,4 +34,30 @@ export const renderItems = (userData, cardsData) => {
       likesOwnerID
     );
   }
+};
+
+export const likeHandler = (evt, cardID, likeCount) => {
+  let method = "";
+  if (evt.target.classList.contains("gallery__button-liked")) {
+    method = "DELETE";
+  } else {
+    method = "PUT";
+  }
+  likeCard(cardID, method)
+    .then((data) => {
+      like(evt, likeCount, data);
+    })
+    .catch((err) => {
+      console.log("Ошибка. Запрос не выполнен: из индекс", err);
+    });
+};
+
+export const deleteHandler = (event, cardID) => {
+  deleteCard(cardID)
+    .then(() => {
+      deleteCardFromDom(event);
+    })
+    .catch((err) => {
+      console.log("Ошибка. Запрос не выполнен:", err);
+    });
 };
