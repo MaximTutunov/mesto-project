@@ -8,7 +8,7 @@ import {
 
 import { openPopup } from "./modal.js";
 
-import { deleteHandler, likeHandler } from "./index.js";
+import { deleteHandler, likeHandler } from "../utils/utils.js";
 
 function like(evt, likeShow, data) {
   evt.target.classList.toggle("gallery__button-liked");

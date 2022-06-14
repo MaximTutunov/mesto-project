@@ -63,31 +63,7 @@ buttonAdd.addEventListener("click", () => {
   openPopup(popupAdd);
 });
 
-export const likeHandler = (evt, cardID, likeCount) => {
-  let method = "";
-  if (evt.target.classList.contains("gallery__button-liked")) {
-    method = "DELETE";
-  } else {
-    method = "PUT";
-  }
-  likeCard(cardID, method)
-    .then((data) => {
-      like(evt, likeCount, data);
-    })
-    .catch((err) => {
-      console.log("Ошибка. Запрос не выполнен: из индекс", err);
-    });
-};
 
-export const deleteHandler = (event, cardID) => {
-  deleteCard(cardID)
-    .then(() => {
-      deleteCardFromDom(event);
-    })
-    .catch((err) => {
-      console.log("Ошибка. Запрос не выполнен:", err);
-    });
-};
 
 popupAdd.addEventListener("submit", (evt) => {
   evt.preventDefault();
@@ -98,7 +74,7 @@ popupAdd.addEventListener("submit", (evt) => {
     nameSubmit.value
   );
 
-  closePopup(popupAdd);
+  
   popupReset.reset();
   toggleButtonState(formEdit, buttonElementAdd, inactiveButtonClassAdd);
 });
