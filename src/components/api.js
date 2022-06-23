@@ -6,6 +6,20 @@ const config = {
   },
 };
 
+export class Api {
+  constructor(config){
+      this._baseUrl = config.baseUrl;
+      this._headers = config.headers;
+    }
+
+    deleteCard(cardID) {
+      return fetch(`${this._baseUrl}cards/${cardID}`, {
+        method: "DELETE",
+        headers: this._headers,
+      }).then(checkResponse);
+    }
+}
+
 const checkResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(res);
 };
@@ -21,14 +35,14 @@ function getCards() {
     checkResponse
   );
 }
-
+/*
 function deleteCard(cardID) {
   return fetch(`${config.baseUrl}cards/${cardID}`, {
     method: "DELETE",
     headers: config.headers,
   }).then(checkResponse);
 }
-
+*/
 function editProfileInfo(nameInputValue, professionInputValue) {
   return fetch(`${config.baseUrl}users/me`, {
     method: "PATCH",
@@ -74,7 +88,7 @@ export {
   editProfileInfo,
   addCard,
   config,
-  deleteCard,
+  
   likeCard,
   editAvatar,
 };
