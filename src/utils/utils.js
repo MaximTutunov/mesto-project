@@ -2,10 +2,13 @@ import {
   profileName,
   profileProfession,
   profileAvatar,
+  
 } from "../components/constants.js";
 import { addItem } from "../components/card.js";
-import {  likeCard, deleteCard } from "../components/api.js";
+import {  likeCard, deleteCard, config, Api} from "../components/api.js";
 import {  like, deleteCardFromDom} from "../components/card.js";
+
+
 
 export const updateUserInfo = (userData, cardsData) => {
   profileName.textContent = userData.name;
@@ -51,7 +54,7 @@ export const likeHandler = (evt, cardID, likeCount) => {
       console.log("Ошибка. Запрос не выполнен: из индекс", err);
     });
 };
-
+/*
 export const deleteHandler = (event, cardID) => {
   deleteCard(cardID)
     .then(() => {
@@ -59,5 +62,18 @@ export const deleteHandler = (event, cardID) => {
     })
     .catch((err) => {
       console.log("Ошибка. Запрос не выполнен:", err);
+    });
+};*/
+
+export const deleteHandler = (event, cardID) => {
+ const api = new Api (config);
+ console.log("called from deleteHandler");
+ console.log(apiDeleteCard);
+  api.deleteCard(cardID)
+    .then(() => {
+      deleteCardFromDom(event);
+    })
+    .catch((err) => {
+      console.log("Ошибка. Запрос не выполнен: ", err);
     });
 };
