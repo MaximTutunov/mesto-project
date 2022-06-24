@@ -8,7 +8,7 @@ import { addItem } from "../components/card.js";
 import {  likeCard, deleteCard, config, Api} from "../components/api.js";
 import {  like, deleteCardFromDom} from "../components/card.js";
 
-
+const api = new Api (config);
 
 export const updateUserInfo = (userData, cardsData) => {
   profileName.textContent = userData.name;
@@ -38,7 +38,7 @@ export const renderItems = (userData, cardsData) => {
     );
   }
 };
-
+/*
 export const likeHandler = (evt, cardID, likeCount) => {
   let method = "";
   if (evt.target.classList.contains("gallery__button-liked")) {
@@ -53,7 +53,7 @@ export const likeHandler = (evt, cardID, likeCount) => {
     .catch((err) => {
       console.log("Ошибка. Запрос не выполнен: из индекс", err);
     });
-};
+};*/
 /*
 export const deleteHandler = (event, cardID) => {
   deleteCard(cardID)
@@ -65,8 +65,24 @@ export const deleteHandler = (event, cardID) => {
     });
 };*/
 
+export const likeHandler = (evt, cardID, likeCount) => {
+  let method = "";
+  if (evt.target.classList.contains("gallery__button-liked")) {
+    method = "DELETE";
+  } else {
+    method = "PUT";
+  }
+  api.likeCard(cardID, method)
+    .then((data) => {
+      like(evt, likeCount, data);
+    })
+    .catch((err) => {
+      console.log("Ошибка. Запрос не выполнен: из индекс", err);
+    });
+};
+
 export const deleteHandler = (event, cardID) => {
- const api = new Api (config);
+
  console.log("called from deleteHandler");
  console.log(apiDeleteCard);
   api.deleteCard(cardID)

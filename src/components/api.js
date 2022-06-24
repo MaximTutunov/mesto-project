@@ -18,6 +18,13 @@ export class Api {
         headers: this._headers,
       }).then(checkResponse);
     }
+
+    likeCard(cardID, method) {
+      return fetch(`${this._baseUrl}cards/likes/${cardID}`, {
+        method: method,
+        headers: this._headers,
+      }).then(checkResponse);
+    }
 }
 
 const checkResponse = (res) => {
@@ -65,13 +72,13 @@ function addCard(placeLinkValue, placeDescriptionValue) {
   }).then(checkResponse);
 }
 
-function likeCard(cardID, method) {
+/*function likeCard(cardID, method) {
   return fetch(`${config.baseUrl}cards/likes/${cardID}`, {
     method: method,
     headers: config.headers,
   }).then(checkResponse);
 }
-
+*/
 function editAvatar(avatarInputValue) {
   return fetch(`${config.baseUrl}users/me/avatar`, {
     method: "PATCH",
@@ -89,6 +96,6 @@ export {
   addCard,
   config,
   
-  likeCard,
+  
   editAvatar,
 };
