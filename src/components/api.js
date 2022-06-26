@@ -11,36 +11,72 @@ export class Api {
       this._baseUrl = config.baseUrl;
       this._headers = config.headers;
     }
+    
+    _checkResponse = (res) => {
+      return res.ok ? res.json() : Promise.reject(res);
+    };
 
     deleteCard(cardID) {
       return fetch(`${this._baseUrl}cards/${cardID}`, {
         method: "DELETE",
         headers: this._headers,
-      }).then(checkResponse);
+      }).then(this._checkResponse);
     }
 
     likeCard(cardID, method) {
       return fetch(`${this._baseUrl}cards/likes/${cardID}`, {
         method: method,
         headers: this._headers,
-      }).then(checkResponse);
+      }).then(this._checkResponse);
     }
      getUserInfo() {
       return fetch(`${this._baseUrl}users/me`, { headers: this._headers }).then(
-        checkResponse
+        this._checkResponse
       );
     }
     
     getCards() {
       return fetch(`${this._baseUrl}cards`, { headers: this._headers }).then(
-        checkResponse
+        this._checkResponse
       );
+    }
+
+     editAvatar(avatarInputValue) {
+      return fetch(`${this._baseUrl}users/me/avatar`, {
+        method: "PATCH",
+        headers: this._headers,
+        body: JSON.stringify({
+          avatar: `${avatarInputValue}`,
+        }),
+      }).then(this._checkResponse);
+    }
+
+     addCard(placeLinkValue, placeDescriptionValue) {
+      return fetch(`${this._baseUrl}cards`, {
+        method: "POST",
+        headers: this._headers,
+        body: JSON.stringify({
+          name: `${placeDescriptionValue}`,
+          link: `${placeLinkValue}`,
+        }),
+      }).then(this._checkResponse);
+    }
+
+     editProfileInfo(nameInputValue, professionInputValue) {
+      return fetch(`${this._baseUrl}users/me`, {
+        method: "PATCH",
+        headers: this._headers,
+        body: JSON.stringify({
+          name: `${nameInputValue}`,
+          about: `${professionInputValue}`,
+        }),
+      }).then(this._checkResponse);
     }
 }
 
-const checkResponse = (res) => {
-  return res.ok ? res.json() : Promise.reject(res);
-};
+// const checkResponse = (res) => {
+//   return res.ok ? res.json() : Promise.reject(res);
+// };
 
 // function getUserInfo() {
 //   return fetch(`${config.baseUrl}users/me`, { headers: config.headers }).then(
@@ -61,27 +97,27 @@ function deleteCard(cardID) {
   }).then(checkResponse);
 }
 */
-function editProfileInfo(nameInputValue, professionInputValue) {
-  return fetch(`${config.baseUrl}users/me`, {
-    method: "PATCH",
-    headers: config.headers,
-    body: JSON.stringify({
-      name: `${nameInputValue}`,
-      about: `${professionInputValue}`,
-    }),
-  }).then(checkResponse);
-}
+// function editProfileInfo(nameInputValue, professionInputValue) {
+//   return fetch(`${config.baseUrl}users/me`, {
+//     method: "PATCH",
+//     headers: config.headers,
+//     body: JSON.stringify({
+//       name: `${nameInputValue}`,
+//       about: `${professionInputValue}`,
+//     }),
+//   }).then(checkResponse);
+// }
 
-function addCard(placeLinkValue, placeDescriptionValue) {
-  return fetch(`${config.baseUrl}cards`, {
-    method: "POST",
-    headers: config.headers,
-    body: JSON.stringify({
-      name: `${placeDescriptionValue}`,
-      link: `${placeLinkValue}`,
-    }),
-  }).then(checkResponse);
-}
+// function addCard(placeLinkValue, placeDescriptionValue) {
+//   return fetch(`${config.baseUrl}cards`, {
+//     method: "POST",
+//     headers: config.headers,
+//     body: JSON.stringify({
+//       name: `${placeDescriptionValue}`,
+//       link: `${placeLinkValue}`,
+//     }),
+//   }).then(checkResponse);
+// }
 
 /*function likeCard(cardID, method) {
   return fetch(`${config.baseUrl}cards/likes/${cardID}`, {
@@ -90,19 +126,17 @@ function addCard(placeLinkValue, placeDescriptionValue) {
   }).then(checkResponse);
 }
 */
-function editAvatar(avatarInputValue) {
-  return fetch(`${config.baseUrl}users/me/avatar`, {
-    method: "PATCH",
-    headers: config.headers,
-    body: JSON.stringify({
-      avatar: `${avatarInputValue}`,
-    }),
-  }).then(checkResponse);
-}
+
+// function editAvatar(avatarInputValue) {
+//   return fetch(`${config.baseUrl}users/me/avatar`, {
+//     method: "PATCH",
+//     headers: config.headers,
+//     body: JSON.stringify({
+//       avatar: `${avatarInputValue}`,
+//     }),
+//   }).then(checkResponse);
+// }
 
 export {
-  editProfileInfo,
-  addCard,
   config,
-  editAvatar,
 };

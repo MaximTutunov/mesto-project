@@ -14,11 +14,17 @@ import {
   buttonElementAdd
 } from "./constants.js";
 
-import { editProfileInfo } from "./api.js";
+import { editProfileInfo, Api } from "./api.js";
 
 import { addCard, editAvatar } from "./api.js";
 
 import { addItem } from "./card.js";
+ 
+//создаём экземпляр класса Api
+ const api = new Api ({baseUrl: "https://mesto.nomoreparties.co/v1/plus-cohort-10/",
+ headers: {
+   Authorization: "8c303db7-8ccc-4a68-8cf0-1a3320479a6d",
+   "Content-type": "application/json",}});
 
 //open&close
 
@@ -44,7 +50,7 @@ function submitProfileForm(evt) {
   const nameInputValue = nameInput.value;
   const profileProfessionValue = professionInput.value;
   renderLoading(true, evt);
-  editProfileInfo(nameInputValue, profileProfessionValue)
+  api.editProfileInfo(nameInputValue, profileProfessionValue)
     .then(() => {
       profileName.textContent = nameInputValue;
       profileProfession.textContent = profileProfessionValue;
@@ -84,7 +90,7 @@ function handlePlaceFormSubmit(
   placeDescriptionValue
 ) {
   buttonElementAdd.textContent='Создание...';
-  addCard(placeLinkValue, placeDescriptionValue)
+  api.addCard(placeLinkValue, placeDescriptionValue)
     .then((data) => {
       const like = data.likes;
       const cardOwnerID = data.owner._id;
@@ -122,7 +128,7 @@ function handleAvatarFormSubmit(evt, avatarForm) {
   evt.preventDefault();
   const avatarSrc = avatarInput.value;
   renderLoading(true, evt);
-  editAvatar(avatarSrc)
+  api.editAvatar(avatarSrc)
     .then(() => {
       profileAvatar.src = avatarSrc;
       closePopup(popupAvatar);
