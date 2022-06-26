@@ -25,23 +25,34 @@ export class Api {
         headers: this._headers,
       }).then(checkResponse);
     }
+     getUserInfo() {
+      return fetch(`${this._baseUrl}users/me`, { headers: this._headers }).then(
+        checkResponse
+      );
+    }
+    
+    getCards() {
+      return fetch(`${this._baseUrl}cards`, { headers: this._headers }).then(
+        checkResponse
+      );
+    }
 }
 
 const checkResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(res);
 };
 
-function getUserInfo() {
-  return fetch(`${config.baseUrl}users/me`, { headers: config.headers }).then(
-    checkResponse
-  );
-}
+// function getUserInfo() {
+//   return fetch(`${config.baseUrl}users/me`, { headers: config.headers }).then(
+//     checkResponse
+//   );
+// }
 
-function getCards() {
-  return fetch(`${config.baseUrl}cards`, { headers: config.headers }).then(
-    checkResponse
-  );
-}
+// function getCards() {
+//   return fetch(`${config.baseUrl}cards`, { headers: config.headers }).then(
+//     checkResponse
+//   );
+// }
 /*
 function deleteCard(cardID) {
   return fetch(`${config.baseUrl}cards/${cardID}`, {
@@ -90,8 +101,6 @@ function editAvatar(avatarInputValue) {
 }
 
 export {
-  getUserInfo,
-  getCards,
   editProfileInfo,
   addCard,
   config,

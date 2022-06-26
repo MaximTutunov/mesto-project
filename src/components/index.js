@@ -1,5 +1,5 @@
 import "../pages/index.css";
-
+import {  config, Api} from "../components/api.js";
 //import of constants
 
 import {
@@ -41,7 +41,7 @@ import {
   hiddenEditBtn,
 } from "./modal.js";
 
-import { getUserInfo, getCards, likeCard, deleteCard } from "./api.js";
+import { getCards, likeCard, deleteCard } from "./api.js";
 import { updateUserInfo, renderItems } from "../utils/utils.js";
 
 //Listener open&close
@@ -100,8 +100,10 @@ avatarForm.addEventListener("submit", (evt) => {
   toggleButtonState(formEdit, buttonElementAdd, inactiveButtonClassAdd);
   handleAvatarFormSubmit(evt, avatarForm);
 });
+ //создаём экземпляр класса Api
+ const api = new Api (config);
 
-Promise.all([getUserInfo(), getCards()])
+Promise.all([api.getUserInfo(), api.getCards()])
   .then(([userData, cardsData]) => {
     updateUserInfo(userData, cardsData);
     renderItems(userData, cardsData);
@@ -109,6 +111,10 @@ Promise.all([getUserInfo(), getCards()])
   .catch((err) => {
     console.log("Ошибка. Запрос не выполнен:", err);
   });
+
+ 
+
+
 
 // enabling validation
 
