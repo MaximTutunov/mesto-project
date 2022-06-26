@@ -82,9 +82,6 @@ export const likeHandler = (evt, cardID, likeCount) => {
 };
 
 export const deleteHandler = (event, cardID) => {
-
- console.log("called from deleteHandler");
- console.log(apiDeleteCard);
   api.deleteCard(cardID)
     .then(() => {
       deleteCardFromDom(event);

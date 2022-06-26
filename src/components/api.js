@@ -104,7 +104,5 @@ export {
   editProfileInfo,
   addCard,
   config,
-  
-  
   editAvatar,
 };

@@ -10,7 +10,8 @@ import {
   avatarInput,
   popupAvatar,
   inactiveButtonClassAdd,
-  popupAdd
+  popupAdd,
+  buttonElementAdd
 } from "./constants.js";
 
 import { editProfileInfo } from "./api.js";
@@ -82,6 +83,7 @@ function handlePlaceFormSubmit(
   placeLinkValue,
   placeDescriptionValue
 ) {
+  buttonElementAdd.textContent='Создание...';
   addCard(placeLinkValue, placeDescriptionValue)
     .then((data) => {
       const like = data.likes;
@@ -104,7 +106,7 @@ function handlePlaceFormSubmit(
     })
     .catch((err) => console.log("Ошибка. Запрос не выполнен:", err))
     .finally(() => {
-      renderLoading(false, evt);
+      buttonElementAdd.textContent='Создать';
     });
 }
 

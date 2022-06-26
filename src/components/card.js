@@ -35,13 +35,19 @@ const createCard = (
 
   const cardImage = cardElement.querySelector(".gallery__photo");
   const likeCount = cardElement.querySelector(".gallery__likes-counter");
-  likeCount.textContent = `${likes}`;
   const deleteButton = cardElement.querySelector(".gallery__button-del");
   const likeButton = cardElement.querySelector(".gallery__button-like");
   cardElement.querySelector(".gallery__caption").textContent =
     placeDescriptionValue;
   cardImage.setAttribute("src", placeLinkValue);
   cardImage.setAttribute("alt", placeDescriptionValue);
+ 
+  //if like is 0 then hidden likes
+  if (likes > 0) {
+    likeCount.textContent = `${likes}`
+  } else {
+    likeCount.textContent = "";
+  }
 
   // setting LIKES
   if (likesOwnerID.includes(myId)) {
