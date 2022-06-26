@@ -13,6 +13,7 @@ import { deleteHandler, likeHandler } from "../utils/utils.js";
 function like(evt, likeShow, data) {
   evt.target.classList.toggle("gallery__button-liked");
   likeShow.textContent = data.likes.length;
+  if (data.likes.length < 1) { likeShow.textContent=''}
 }
 
 function deleteCardFromDom(event) {
