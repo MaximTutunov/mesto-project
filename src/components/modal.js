@@ -16,7 +16,7 @@ import {
 
 import { editProfileInfo, Api } from "./api.js";
 
-import { addCard, editAvatar } from "./api.js";
+
 
 import { addItem } from "./card.js";
  

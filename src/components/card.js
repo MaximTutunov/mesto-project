@@ -22,60 +22,7 @@ function deleteCardFromDom(event) {
   const target = event.target;
   target.closest(".gallery__item").remove();
 }
-/*
-const createCard = (
-  placeLinkValue,
-  placeDescriptionValue,
-  likes,
-  myId,
-  cardOwnerID,
-  cardID,
-  likesOwnerID
-) => {
-  const cardElement = cardTemplate
-    .querySelector(".gallery__item")
-    .cloneNode(true);
 
-  const cardImage = cardElement.querySelector(".gallery__photo");
-  const likeCount = cardElement.querySelector(".gallery__likes-counter");
-  const deleteButton = cardElement.querySelector(".gallery__button-del");
-  const likeButton = cardElement.querySelector(".gallery__button-like");
-  cardElement.querySelector(".gallery__caption").textContent =
-    placeDescriptionValue;
-  cardImage.setAttribute("src", placeLinkValue);
-  cardImage.setAttribute("alt", placeDescriptionValue);
-
-  //if like is 0 then hidden likes
-  if (likes > 0) {
-    likeCount.textContent = `${likes}`;
-  } else {
-    likeCount.textContent = "";
-  }
-
-  // setting LIKES
-  if (likesOwnerID.includes(myId)) {
-    likeButton.classList.add("gallery__button-liked");
-  }
-
-  likeButton.addEventListener("click", function (evt) {
-    likeHandler(evt, cardID, likeCount);
-  });
-
-  ///delete
-  if (myId === cardOwnerID) {
-    deleteButton.addEventListener("click", function (event) {
-      deleteHandler(event, cardID);
-    });
-  } else {
-    deleteButton.remove();
-  }
-
-  cardImage.addEventListener("click", () => {
-    openPopupImage(placeLinkValue, placeDescriptionValue);
-  });
-
-  return cardElement;
-};*/
 
 class Card {
   constructor(
@@ -85,7 +32,8 @@ class Card {
     myId,
     cardOwnerID,
     cardID,
-    likesOwnerID
+    likesOwnerID, 
+    {handleCardClick}
   ) {
     this.placeLinkValue = placeLinkValue;
     this.placeDescriptionValue = placeDescriptionValue;
@@ -94,20 +42,25 @@ class Card {
     this.cardOwnerID = cardOwnerID;
     this.cardID = cardID;
     this.likesOwnerID = likesOwnerID;
+   this.handleCardClick = handleCardClick;
     //consts
 
-    this.cardElement1 = cardTemplate
+    this.cardElement = cardTemplate
       .querySelector(".gallery__item")
       .cloneNode(true);
-    this.cardImage = this.cardElement1.querySelector(".gallery__photo");
-    this.likeCount = this.cardElement1.querySelector(".gallery__likes-counter");
-    this.deleteButton = this.cardElement1.querySelector(".gallery__button-del");
-    this.likeButton = this.cardElement1.querySelector(".gallery__button-like");
+    this.cardImage = this.cardElement.querySelector(".gallery__photo");
+    this.likeCount = this.cardElement.querySelector(".gallery__likes-counter");
+    this.deleteButton = this.cardElement.querySelector(".gallery__button-del");
+    this.likeButton = this.cardElement.querySelector(".gallery__button-like");
   }
 
-  CL(cardElement1) {
-    console.log(this.deleteButton);
-  }
+ CL (smth) {
+  console.log(smth);
+ }
+  
+/* handleImageClick (){
+  this.handleCardClick(this.myId)
+ }*/
 
   createCard(
     placeLinkValue,
@@ -116,9 +69,10 @@ class Card {
     myId,
     cardOwnerID,
     cardID,
-    likesOwnerID
+    likesOwnerID, 
+   
   ) {
-    this.cardElement1.querySelector(".gallery__caption").textContent =
+    this.cardElement.querySelector(".gallery__caption").textContent =
       placeDescriptionValue;
     this.cardImage.setAttribute("src", placeLinkValue);
     this.cardImage.setAttribute("alt", placeDescriptionValue);
@@ -147,60 +101,18 @@ class Card {
     } else {
       this.deleteButton.remove();
     }
-
-    this.cardImage.addEventListener("click", () => {
-      openPopupImage(placeLinkValue, placeDescriptionValue);
+    
+   this.cardImage.addEventListener("click", () => {
+    
+    this.handleCardClick(placeLinkValue, placeDescriptionValue);
+     
     });
 
-    return this.cardElement1;
+    return this.cardElement;
   }
 }
 
-/*this.cardElement = this.cardTemplate
-      .querySelector(".gallery__item")
-      .cloneNode(true);
 
-    this.cardImage = this.cardElement.querySelector(".gallery__photo");
-    this.likeCount = this.cardElement.querySelector(".gallery__likes-counter");
-    this.deleteButton = this.cardElement.querySelector(".gallery__button-del");
-    this.likeButton = this.cardElement.querySelector(".gallery__button-like");
-    this.cardElement.querySelector(".gallery__caption").textContent =
-      placeDescriptionValue;}
-
-      createCard() {
-    cardImage.setAttribute("src", placeLinkValue);
-    cardImage.setAttribute("alt", placeDescriptionValue);
-
-    //if like is 0 then hidden likes
-    if (likes > 0) {
-      likeCount.textContent = `${likes}`;
-    } else {
-      likeCount.textContent = "";
-    }
-
-    // setting LIKES
-    if (likesOwnerID.includes(myId)) {
-      likeButton.classList.add("gallery__button-liked");
-    }
-
-    likeButton.addEventListener("click", function (evt) {
-      likeHandler(evt, cardID, likeCount);
-    });
-
-    ///delete
-    if (myId === cardOwnerID) {
-      deleteButton.addEventListener("click", function (event) {
-        deleteHandler(event, cardID);
-      });
-    } else {
-      deleteButton.remove();
-    }
-
-    cardImage.addEventListener("click", () => {
-      openPopupImage(placeLinkValue, placeDescriptionValue);
-    });
-
-    return cardElement;*/
 
 function openPopupImage(imageLink, header) {
   imagePopup.setAttribute("src", imageLink);
@@ -216,19 +128,26 @@ function addItem(
   myId,
   cardOwnerID,
   cardID,
-  likesOwnerID
+  likesOwnerID,
+  
 ) {
-  /*const cardElement = createCard(
-    placeLinkValue,
-    placeDescriptionValue,
-    likes,
-    myId,
-    cardOwnerID,
-    cardID,
-    likesOwnerID
-  );*/
+  
 
-  const CardT = new Card(
+  const card = new Card(
+    placeLinkValue,
+    placeDescriptionValue,
+    likes,
+    myId,
+    cardOwnerID,
+    cardID,
+    likesOwnerID,
+   
+   {handleCardClick: (imageLink, header) => {
+      openPopupImage(imageLink, header);}
+    }
+  );
+ 
+  const cardElement =card.createCard(
     placeLinkValue,
     placeDescriptionValue,
     likes,
@@ -236,18 +155,14 @@ function addItem(
     cardOwnerID,
     cardID,
     likesOwnerID
-  );
-  const cardElement =CardT.createCard(
-    placeLinkValue,
-    placeDescriptionValue,
-    likes,
-    myId,
-    cardOwnerID,
-    cardID,
-    likesOwnerID
-  );
+       
+      );
+
+     
 
   cardsContainer.prepend(cardElement);
 }
+
+
 
 export {  addItem, like, deleteCardFromDom };
