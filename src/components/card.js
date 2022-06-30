@@ -8,21 +8,20 @@ import {
 
 import { openPopup } from "./modal.js";
 
-import { deleteHandler, likeHandler } from "../utils/utils.js";
+import { api } from "../utils/utils.js";
 
-function like(evt, likeShow, data) {
+/*function like(evt, likeShow, data) {
   evt.target.classList.toggle("gallery__button-liked");
   likeShow.textContent = data.likes.length;
   if (data.likes.length < 1) {
     likeShow.textContent = "";
   }
-}
+}*/
 
-function deleteCardFromDom(event) {
+/*function deleteCardFromDom(event) {
   const target = event.target;
   target.closest(".gallery__item").remove();
-}
-
+}*/
 
 class Card {
   constructor(
@@ -32,8 +31,10 @@ class Card {
     myId,
     cardOwnerID,
     cardID,
-    likesOwnerID, 
-    {handleCardClick}
+    likesOwnerID,
+    { handleCardClick },
+    { likeHandler },
+    { deleteHandler }
   ) {
     this.placeLinkValue = placeLinkValue;
     this.placeDescriptionValue = placeDescriptionValue;
@@ -42,7 +43,10 @@ class Card {
     this.cardOwnerID = cardOwnerID;
     this.cardID = cardID;
     this.likesOwnerID = likesOwnerID;
-   this.handleCardClick = handleCardClick;
+    this.handleCardClick = handleCardClick;
+    this.likeHandler = likeHandler;
+    this.deleteHandler = deleteHandler;
+
     //consts
 
     this.cardElement = cardTemplate
@@ -54,13 +58,33 @@ class Card {
     this.likeButton = this.cardElement.querySelector(".gallery__button-like");
   }
 
- CL (smth) {
-  console.log(smth);
- }
   
-/* handleImageClick (){
-  this.handleCardClick(this.myId)
- }*/
+  deleteCardFromDom(event) {
+    const target = event.target;
+    target.closest(".gallery__item").remove();
+  }
+
+  like(evt, likeShow, data) {
+    evt.target.classList.toggle("gallery__button-liked");
+    likeShow.textContent = data.likes.length;
+    if (data.likes.length < 1) {
+      likeShow.textContent = "";
+    }
+  }
+
+  /*
+  like(evt, likeShow, data) {
+  evt.target.classList.toggle("gallery__button-liked");
+  likeShow.textContent = data.likes.length;
+  if (data.likes.length < 1) {
+    likeShow.textContent = "";
+  }
+}
+
+ deleteCardFromDom (event) {
+  const target = event.target;
+  target.closest(".gallery__item").remove();
+}*/
 
   createCard(
     placeLinkValue,
@@ -69,8 +93,7 @@ class Card {
     myId,
     cardOwnerID,
     cardID,
-    likesOwnerID, 
-   
+    likesOwnerID
   ) {
     this.cardElement.querySelector(".gallery__caption").textContent =
       placeDescriptionValue;
@@ -89,30 +112,26 @@ class Card {
       this.likeButton.classList.add("gallery__button-liked");
     }
 
-    this.likeButton.addEventListener("click", function (evt) {
-      likeHandler(evt, cardID, likeCount);
+    this.likeButton.addEventListener("click", (evt) => {
+      this.likeHandler(evt, cardID, this.likeCount);
     });
 
     ///delete
     if (myId === cardOwnerID) {
-      this.deleteButton.addEventListener("click", function (event) {
-        deleteHandler(event, cardID);
+      this.deleteButton.addEventListener("click", (event) => {
+        this.deleteHandler(event, cardID);
       });
     } else {
       this.deleteButton.remove();
     }
-    
-   this.cardImage.addEventListener("click", () => {
-    
-    this.handleCardClick(placeLinkValue, placeDescriptionValue);
-     
+
+    this.cardImage.addEventListener("click", () => {
+      this.handleCardClick(placeLinkValue, placeDescriptionValue);
     });
 
     return this.cardElement;
   }
 }
-
-
 
 function openPopupImage(imageLink, header) {
   imagePopup.setAttribute("src", imageLink);
@@ -128,11 +147,8 @@ function addItem(
   myId,
   cardOwnerID,
   cardID,
-  likesOwnerID,
-  
+  likesOwnerID
 ) {
-  
-
   const card = new Card(
     placeLinkValue,
     placeDescriptionValue,
@@ -141,13 +157,45 @@ function addItem(
     cardOwnerID,
     cardID,
     likesOwnerID,
-   
-   {handleCardClick: (imageLink, header) => {
-      openPopupImage(imageLink, header);}
+
+    {
+      handleCardClick: (imageLink, header) => {
+        openPopupImage(imageLink, header);
+      },
+    },
+    {
+      likeHandler: (evt, cardID, likeCount) => {
+        let method = "";
+        if (evt.target.classList.contains("gallery__button-liked")) {
+          method = "DELETE";
+        } else {
+          method = "PUT";
+        }
+        api
+          .likeCard(cardID, method)
+          .then((data) => {
+            card.like(evt, likeCount, data);
+          })
+          .catch((err) => {
+            console.log("Ошибка. Запрос не выполнен: из индекс", err);
+          });
+      },
+    },
+    {
+      deleteHandler: (event, cardID) => {
+        api
+          .deleteCard(cardID)
+          .then(() => {
+            card.deleteCardFromDom(event);
+          })
+          .catch((err) => {
+            console.log("Ошибка. Запрос не выполнен: ", err);
+          });
+      },
     }
   );
- 
-  const cardElement =card.createCard(
+
+  const cardElement = card.createCard(
     placeLinkValue,
     placeDescriptionValue,
     likes,
@@ -155,14 +203,13 @@ function addItem(
     cardOwnerID,
     cardID,
     likesOwnerID
-       
-      );
-
-     
+  );
 
   cardsContainer.prepend(cardElement);
 }
 
+/*function CL (smth) {
+  console.log(smth);
+}*/
 
-
-export {  addItem, like, deleteCardFromDom };
+export { addItem };

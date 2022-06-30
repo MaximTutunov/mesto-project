@@ -6,9 +6,9 @@ import {
 } from "../components/constants.js";
 import { addItem } from "../components/card.js";
 import {  likeCard, deleteCard, config, Api} from "../components/api.js";
-import {  like, deleteCardFromDom} from "../components/card.js";
 
-const api = new Api (config);
+
+export const api = new Api (config);
 
 export const updateUserInfo = (userData, cardsData) => {
   profileName.textContent = userData.name;
@@ -65,7 +65,7 @@ export const deleteHandler = (event, cardID) => {
     });
 };*/
 
-export const likeHandler = (evt, cardID, likeCount) => {
+/*export const likeHandler = (evt, cardID, likeCount) => {
   let method = "";
   if (evt.target.classList.contains("gallery__button-liked")) {
     method = "DELETE";
@@ -89,4 +89,4 @@ export const deleteHandler = (event, cardID) => {
     .catch((err) => {
       console.log("Ошибка. Запрос не выполнен: ", err);
     });
-};
+};*/
