@@ -1,4 +1,6 @@
 import "../pages/index.css";
+import Section from "./section.js";
+import Card from "./card";
 import {  config, Api} from "../components/api.js";
 //import of constants
 
@@ -100,22 +102,119 @@ avatarForm.addEventListener("submit", (evt) => {
   toggleButtonState(formEdit, buttonElementAdd, inactiveButtonClassAdd);
   handleAvatarFormSubmit(evt, avatarForm);
 });
+
+
+
+
+//создаем кард
+function createItem(
+  placeLinkValue,
+  placeDescriptionValue,
+  likes,
+  myId,
+  cardOwnerID,
+  cardID,
+  likesOwnerID
+) {
+  const card = new Card(
+    placeLinkValue,
+    placeDescriptionValue,
+    likes,
+    myId,
+    cardOwnerID,
+    cardID,
+    likesOwnerID,
+
+    {
+      handleCardClick: (imageLink, header) => {
+        openPopupImage(imageLink, header);
+      },
+    },
+    {
+      likeHandler: (evt, cardID, likeCount) => {
+        let method = "";
+        if (evt.target.classList.contains("gallery__button-liked")) {
+          method = "DELETE";
+        } else {
+          method = "PUT";
+        }
+        api
+          .likeCard(cardID, method)
+          .then((data) => {
+            card.like(evt, likeCount, data);
+          })
+          .catch((err) => {
+            console.log("Ошибка. Запрос не выполнен: из индекс", err);
+          });
+      },
+    },
+    {
+      deleteHandler: (event, cardID) => {
+        api
+          .deleteCard(cardID)
+          .then(() => {
+            card.deleteCardFromDom(event);
+          })
+          .catch((err) => {
+            console.log("Ошибка. Запрос не выполнен: ", err);
+          });
+      },
+    }
+  );
+
+  const cardElement = card.createCard(
+    placeLinkValue,
+    placeDescriptionValue,
+    likes,
+    myId,
+    cardOwnerID,
+    cardID,
+    likesOwnerID
+  );
+
+  return cardElement;
+  
+}
+
  //создаём экземпляр класса Api
  const api = new Api (config);
 
 Promise.all([api.getUserInfo(), api.getCards()])
   .then(([userData, cardsData]) => {
     updateUserInfo(userData, cardsData);
-    renderItems(userData, cardsData);
+    cardsRenders.renderItems(cardsData);
   })
   .catch((err) => {
     console.log("Ошибка. Запрос не выполнен:", err);
   });
 
  
+// Создание экземпляра класса Section
+const cardsRenders = new Section({
+  renderer: (placeLinkValue,
+    placeDescriptionValue,
+    likes,
+    myId,
+    cardOwnerID,
+    cardID,
+    likesOwnerID) => {
+    cardsRenders.addItem(createItem(
+      placeLinkValue,
+      placeDescriptionValue,
+      likes,
+      myId,
+      cardOwnerID,
+      cardID,
+      likesOwnerID
+    ));
+  },
+}, '.gallery__container');
 
-
-
+const cardsList = new Section({
+  renderer: (card) => {
+    cardsList.addItem(createItem(card));
+  },
+}, '.somph');
 // enabling validation
 
 enableValidation({

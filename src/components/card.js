@@ -9,6 +9,7 @@ import {
 import { openPopup } from "./modal.js";
 
 import { api } from "../utils/utils.js";
+import { data } from "autoprefixer";
 
 /*function like(evt, likeShow, data) {
   evt.target.classList.toggle("gallery__button-liked");
@@ -23,115 +24,113 @@ import { api } from "../utils/utils.js";
   target.closest(".gallery__item").remove();
 }*/
 
-class Card {
-  constructor(
-    placeLinkValue,
-    placeDescriptionValue,
-    likes,
+export default class Card {
+  constructor({
+    data,
     myId,
-    cardOwnerID,
-    cardID,
+    cardSelector,
     likesOwnerID,
-    { handleCardClick },
-    { likeHandler },
-    { deleteHandler }
-  ) {
-    this.placeLinkValue = placeLinkValue;
-    this.placeDescriptionValue = placeDescriptionValue;
-    this.likes = likes;
-    this.myId = myId;
-    this.cardOwnerID = cardOwnerID;
-    this.cardID = cardID;
-    this.likesOwnerID = likesOwnerID;
-    this.handleCardClick = handleCardClick;
-    this.likeHandler = likeHandler;
-    this.deleteHandler = deleteHandler;
+    handleCardClick,
+    likeHandler,
+    likeRemove,
+    deleteHandler,
+  }) {
+    this._name = data._name;
+    this._link = data.link;
+    this._likes = data.likes;
+    this.placeDescriptionValue = placeDescriptionValue; 
+    this._myId = myId;
+    this._cardOwnerID = data.owner._id;
+    this._cardID = data._id;
+    this._likesOwnerID = likesOwnerID;
+    this._handleCardClick = handleCardClick;
+    this._likeHandler = likeHandler;
+    this._deleteHandler = deleteHandler;
+    this._cardSelector = cardSelector;
+    this._likeRemove = likeRemove;
+    this._likeSet = likeSet;
+  }
 
-    //consts
-
-    this.cardElement = cardTemplate
-      .querySelector(".gallery__item")
+  _getTemplate() {
+    this._cardElement = document
+      .querySelector(this._cardSelector)
+      .content.querySelector(".gallery__item")
       .cloneNode(true);
-    this.cardImage = this.cardElement.querySelector(".gallery__photo");
-    this.likeCount = this.cardElement.querySelector(".gallery__likes-counter");
-    this.deleteButton = this.cardElement.querySelector(".gallery__button-del");
-    this.likeButton = this.cardElement.querySelector(".gallery__button-like");
+
+    return this._cardElement;
   }
 
-  
-  deleteCardFromDom(event) {
-    const target = event.target;
-    target.closest(".gallery__item").remove();
-  }
+  createCard() {
+    _setEventListeners();
+    this._element = this._getTemplate();
+    this._cardImage = this._cardElement.querySelector(".gallery__photo");
+    this._likeCount = this._cardElement.querySelector(".gallery__likes-counter");
+    this._deleteButton = this._cardElement.querySelector(".gallery__button-del");
+    this._likeButton = this._cardElement.querySelector(".gallery__button-like");
+    this._cardElement.querySelector(".gallery__caption").textContent = this._name;
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name;
+    this._likeCount.textContent = this._likes.length;
+    this._hasdeleteButton();
+    this._deleteZeroLikes();
+    this._isOwnerLike();
+    this._setEventListeners();
+     }
 
-  like(evt, likeShow, data) {
-    evt.target.classList.toggle("gallery__button-liked");
-    likeShow.textContent = data.likes.length;
-    if (data.likes.length < 1) {
-      likeShow.textContent = "";
+   _hasdeleteButton(){
+    if (this._myId !== this._cardOwnerID){
+        this.deleteButton.remove();
     }
   }
 
-  /*
-  like(evt, likeShow, data) {
-  evt.target.classList.toggle("gallery__button-liked");
-  likeShow.textContent = data.likes.length;
-  if (data.likes.length < 1) {
-    likeShow.textContent = "";
+  //Метод удаления карточки
+  deleteCardFromDom(){
+    this._cardElement.remove();
+    this._cardElement = null;
   }
-}
 
- deleteCardFromDom (event) {
-  const target = event.target;
-  target.closest(".gallery__item").remove();
-}*/
-
-  createCard(
-    placeLinkValue,
-    placeDescriptionValue,
-    likes,
-    myId,
-    cardOwnerID,
-    cardID,
-    likesOwnerID
-  ) {
-    this.cardElement.querySelector(".gallery__caption").textContent =
-      placeDescriptionValue;
-    this.cardImage.setAttribute("src", placeLinkValue);
-    this.cardImage.setAttribute("alt", placeDescriptionValue);
-
-    //if like is 0 then hidden likes
-    if (likes > 0) {
-      this.likeCount.textContent = `${likes}`;
+  _deleteZeroLikes(){
+    if (this._likes.length > 0) {
+      this._likeCount.textContent = `${this._likes.length}`;
     } else {
       this.likeCount.textContent = "";
     }
-
-    // setting LIKES
-    if (likesOwnerID.includes(myId)) {
-      this.likeButton.classList.add("gallery__button-liked");
-    }
-
-    this.likeButton.addEventListener("click", (evt) => {
-      this.likeHandler(evt, cardID, this.likeCount);
-    });
-
-    ///delete
-    if (myId === cardOwnerID) {
-      this.deleteButton.addEventListener("click", (event) => {
-        this.deleteHandler(event, cardID);
-      });
-    } else {
-      this.deleteButton.remove();
-    }
-
-    this.cardImage.addEventListener("click", () => {
-      this.handleCardClick(placeLinkValue, placeDescriptionValue);
-    });
-
-    return this.cardElement;
   }
-}
+//проверка владельца
+  _isOwnerLike(){
+    if (this._likesOwnerID.includes(this._myId)) {
+      this._likeButton.classList.add("gallery__button-liked");
+    }
+  }
+//слушатель
+  _setEventListeners(){
+    //слушатель кнопки лайк
+    this._likeButton.addEventListener("click", () => {
+      if (this._likeButton.classList.contains("gallery__button-liked")){
+        this._likeRemove(this._cardID);
+      } else {
+    this._likeSet(this._cardID);
+  }});
+//слушатель попапа с картинкой
+    this._cardImage.addEventListener('click', () => {
+    this._handleCardClick(this._name, this._link);
+  })
+
+  //слушатель кнопки удаления карточки
+  this._deleteButton.addEventListener('click', () => {
+    this._deleteHandler(this._cardID)
+  }) 
+  }
+  
+ 
+  likeHandler(data) {
+    this._likes = data.likes;
+    this._likeButton.classList.toggle("gallery__button-liked");
+    this._likeCount.textContent = this._likes.length;
+      }
+  }
+
+
 
 function openPopupImage(imageLink, header) {
   imagePopup.setAttribute("src", imageLink);
