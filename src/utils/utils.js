@@ -4,11 +4,11 @@ import {
   profileAvatar,
   
 } from "../components/constants.js";
-import { addItem } from "../components/card.js";
+// import { addItem } from "../components/card.js";
 import {  likeCard, deleteCard, config, Api} from "../components/api.js";
 
 
-export const api = new Api (config);
+// export const api = new Api (config);
 
 export const updateUserInfo = (userData, cardsData) => {
   profileName.textContent = userData.name;

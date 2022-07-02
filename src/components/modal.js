@@ -14,17 +14,6 @@ import {
   buttonElementAdd
 } from "./constants.js";
 
-import { editProfileInfo, Api } from "./api.js";
-
-
-
-import { addItem } from "./card.js";
- 
-//создаём экземпляр класса Api
- const api = new Api ({baseUrl: "https://mesto.nomoreparties.co/v1/plus-cohort-10/",
- headers: {
-   Authorization: "8c303db7-8ccc-4a68-8cf0-1a3320479a6d",
-   "Content-type": "application/json",}});
 
 //open&close
 
@@ -83,38 +72,38 @@ popupsAll.forEach((popup) => {
   });
 });
 
-function handlePlaceFormSubmit(
-  evt,
-  placeForm,
-  placeLinkValue,
-  placeDescriptionValue
-) {
-  buttonElementAdd.textContent='Создание...';
-  api.addCard(placeLinkValue, placeDescriptionValue)
-    .then((data) => {
-      const like = data.likes;
-      const cardOwnerID = data.owner._id;
-      const cardID = data._id;
-      const likesOwnerID = [];
-      like.forEach((element) => {
-        likesOwnerID.push(element._id);
-      });
-      addItem(
-        placeLinkValue,
-        placeDescriptionValue,
-        like.length,
-        cardOwnerID,
-        cardOwnerID,
-        cardID,
-        likesOwnerID
-      );
-      closePopup(popupAdd);
-    })
-    .catch((err) => console.log("Ошибка. Запрос не выполнен:", err))
-    .finally(() => {
-      buttonElementAdd.textContent='Создать';
-    });
-}
+// function handlePlaceFormSubmit(
+//   evt,
+//   placeForm,
+//   placeLinkValue,
+//   placeDescriptionValue
+// ) {
+//   buttonElementAdd.textContent='Создание...';
+//   api.addCard(placeLinkValue, placeDescriptionValue)
+//     .then((data) => {
+//       const like = data.likes;
+//       const cardOwnerID = data.owner._id;
+//       const cardID = data._id;
+//       const likesOwnerID = [];
+//       like.forEach((element) => {
+//         likesOwnerID.push(element._id);
+//       });
+//       addItem(
+//         placeLinkValue,
+//         placeDescriptionValue,
+//         like.length,
+//         cardOwnerID,
+//         cardOwnerID,
+//         cardID,
+//         likesOwnerID
+//       );
+//       closePopup(popupAdd);
+//     })
+//     .catch((err) => console.log("Ошибка. Запрос не выполнен:", err))
+//     .finally(() => {
+//       buttonElementAdd.textContent='Создать';
+//     });
+// }
 
 function showEditBtn(editImage) {
   editImage.classList.add("profile__change-avatar_active");
@@ -158,7 +147,7 @@ export {
   closeEscPopup,
   closePopup,
   submitProfileForm,
-  handlePlaceFormSubmit,
+  // handlePlaceFormSubmit,
   handleAvatarFormSubmit,
   showEditBtn,
   hiddenEditBtn,
