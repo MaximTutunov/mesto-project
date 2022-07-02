@@ -10,7 +10,7 @@ import {  likeCard, deleteCard, config, Api} from "../components/api.js";
 
 // export const api = new Api (config);
 
-export const updateUserInfo = (userData, cardsData) => {
+/*export const updateUserInfo = (userData, cardsData) => {
   profileName.textContent = userData.name;
   profileProfession.textContent = userData.about;
   profileAvatar.src = userData.avatar;

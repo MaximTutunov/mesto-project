@@ -13,13 +13,11 @@ import {
   popupEdit,
   buttonEdit,
   buttonAdd,
-  popupAdd,
-  nameSubmit,
-  linkSubmit,
   profileName,
   profileProfession,
   formProfileElement,
   nameInput,
+  profileAvatar,
   professionInput,
   popupReset,
   formEdit,
@@ -41,9 +39,9 @@ import { enableValidation, toggleButtonState } from "./validate.js";
 import {
   openPopup,
   // closePopup,
-  submitProfileForm,
+  // submitProfileForm,
   // handlePlaceFormSubmit,
-  handleAvatarFormSubmit,
+  // handleAvatarFormSubmit,
   showEditBtn,
   hiddenEditBtn,
 } from "./modal.js";
@@ -60,10 +58,10 @@ const api = new Api({
 
 let userId;
 
-//вызываем промисы, отрисовываем карточки и добавляем инфо о пользователе
+//+вызываем промисы, отрисовываем карточки и добавляем инфо о пользователе
 Promise.all([api.getUserInfo(), api.getCards()])
   .then(([userData, cardsData]) => {
-    updateUserInfo(userData, cardsData);
+    userInfo.setUserInfo(userData);
     userId = userData._id;
     cardsList.renderItems(cardsData);
   })
@@ -71,35 +69,45 @@ Promise.all([api.getUserInfo(), api.getCards()])
     console.log("Ошибка. Запрос не выполнен:", err);
   });
 
+//+экземпляр класса, отображающий информацию о пользователе
+const userInfo = new UserInfo({
+  name: ".profile__name",
+  profession: ".profile__profession",
+  link: ".profile__avatar",
+});
 
-// Создание экземпляра класса Section
-const cardsList = new Section({
-  renderer: (card) => {
-    cardsList.addItem(createCard(card));
+//+ Создание экземпляра класса Section
+const cardsList = new Section(
+  {
+    renderer: (card) => {
+      cardsList.addItem(createCard(card));
+    },
   },
-}, '.gallery__container');
-
+  ".gallery__container"
+);
 
 // функционал создания новой карточки
 const createCard = (data) => {
   const card = new Card({
     data: data,
-    cardSelector: '.gallery__template',
+    cardSelector: ".gallery__template",
     userId: userId,
     handleCardClick: (name, link) => {
       popupImage.open(name, link);
     },
     deleteHandler: (cardID) => {
-        api.deleteCard(cardID)
-          .then(() => {
-            card.deleteCardFromDom();
-          })
-          .catch((err) => {
-            console.log(`Ошибка: ${err}`);
-          });
+      api
+        .deleteCard(cardID)
+        .then(() => {
+          card.deleteCardFromDom();
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        });
     },
     setLike: (cardID) => {
-      api.setLike(cardID)
+      api
+        .setLike(cardID)
         .then((data) => {
           card.likeSwitcher(data);
         })
@@ -108,7 +116,8 @@ const createCard = (data) => {
         });
     },
     deleteLike: (cardID) => {
-      api.deleteLike(cardID)
+      api
+        .deleteLike(cardID)
         .then((data) => {
           card.likeSwitcher(data);
         })
@@ -121,12 +130,13 @@ const createCard = (data) => {
   return cardElement;
 };
 
-
-const  handlePlaceFormSubmit = new PopupWithForm({
-  popupSelector: '.popup_add',
+/*-попап карточки  */
+const handlePlaceFormSubmit = new PopupWithForm({
+  popupSelector: ".popup_add",
   submitProfileForm: (popupData) => {
     handlePlaceFormSubmit.renderLoading(true);
-    api.addCard(popupData)
+    api
+      .addCard(popupData)
       .then((popupData) => {
         cardsList.addItem(createCard(popupData));
         handlePlaceFormSubmit.close();
@@ -137,65 +147,79 @@ const  handlePlaceFormSubmit = new PopupWithForm({
       .finally(() => {
         handlePlaceFormSubmit.renderLoading(false);
       });
-  }
+  },
 });
 handlePlaceFormSubmit.setEventListeners();
 buttonAdd.addEventListener("click", () => {
   handlePlaceFormSubmit.open();
 });
 
-//Listener open&close
+//+попап с картинкой
+const popupImage = new PopupWithImage(".popup_enlarged-image");
+popupImage.setEventListeners();
 
-//EDIT POPUP and Submit
-
-//Listener EDIT PROFILE POPUP and Submit
-buttonEdit.addEventListener("click", () => {
-  openPopup(popupEdit);
-  nameInput.value = profileName.textContent;
-  professionInput.value = profileProfession.textContent;
+//попап c аватаром
+const handleAvatarFormSubmit = new PopupWithForm({
+  popupSelector: ".popup_avatar-edit",
+  submitProfileForm: (popupData) => {
+    handlePlaceFormSubmit.renderLoading(true);
+    api
+      .editAvatar(popupData)
+      .then((popupData) => {
+        profileAvatar.src = popupData.avatar;
+        handleAvatarFormSubmit.close();
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      })
+      .finally(() => {
+        handlePlaceFormSubmit.renderLoading(false);
+      });
+  },
 });
 
-formProfileElement.addEventListener("submit", submitProfileForm);
-
-//Card adding
-
-
-
-// popupAdd.addEventListener("submit", (evt) => {
-//   evt.preventDefault();
-//   handlePlaceFormSubmit(
-//     evt,
-//     formElementAddCard,
-//     linkSubmit.value,
-//     nameSubmit.value
-//   );
-
-//   popupReset.reset();
-//   toggleButtonState(formEdit, buttonElementAdd, inactiveButtonClassAdd);
-// });
-
-//AVATAR Listeners
-
-editAvatarBtn.addEventListener("mouseover", () => {
-  showEditBtn(editAvatarBtnActive);
-});
-
-editAvatarBtn.addEventListener("mouseout", () => {
-  hiddenEditBtn(editAvatarBtnActive);
-});
-
+handleAvatarFormSubmit.setEventListeners();
 editAvatarBtn.addEventListener("click", () => {
-  openPopup(popupAvatar);
-  avatarForm.reset();
-  toggleButtonState(formEdit, buttonElementAdd, inactiveButtonClassAdd);
+  handleAvatarFormSubmit.open();
 });
 
-avatarForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  toggleButtonState(formEdit, buttonElementAdd, inactiveButtonClassAdd);
-  handleAvatarFormSubmit(evt, avatarForm);
+//попап с профилем
+const submitProfileForm = new PopupWithForm({
+  popupSelector: ".popup_edit",
+  submitProfileForm: (popupData) => {
+    handlePlaceFormSubmit.renderLoading(true);
+    api
+      .editProfileInfo(popupData)
+      .then((userData) => {
+        userInfo.setUserInfo(userData);
+        submitProfileForm.close();
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      })
+      .finally(() => {
+        handlePlaceFormSubmit.renderLoading(false);
+      });
+  },
+});
+submitProfileForm.setEventListeners();
+
+//заносим данные из инпутов в профиль
+function editProfileInputs({ name, profession }) {
+  nameInput.value = name;
+  professionInput.value = profession;
+}
+
+buttonEdit.addEventListener("click", () => {
+  const profile = userInfo.getUserInfo();
+  editProfileInputs({
+    name: profile.name,
+    profession: profile.profession,
+  });
+  submitProfileForm.open();
 });
 
+/*--------------------------------------------------------*/
 
 
 // enabling validation
@@ -208,9 +232,3 @@ enableValidation({
   inputErrorClass: "popup__input_type_error",
   errorClass: "popup__error_visible",
 });
-
-
-
-//попап с картинкой
-const popupImage = new PopupWithImage('.popup_enlarged-image');
-popupImage.setEventListeners();

@@ -19,7 +19,7 @@ export default class UserInfo {
     // принимает новые данные пользователя и добавляет их на страницу
     setUserInfo(data) {
         this._name.textContent = data.name;
-        this._profession.textContent = data.profession;
-        this._link.src = data.link;
+        this._profession.textContent = data.about;
+        this._link.src = data.avatar;
     }
 }

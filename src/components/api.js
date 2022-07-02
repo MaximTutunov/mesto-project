@@ -46,12 +46,12 @@ export default class Api {
       );
     }
 
-     editAvatar (avatarInputValue) {
+     editAvatar (data) {
       return fetch(`${this._baseUrl}users/me/avatar`, {
         method: "PATCH",
         headers: this._headers,
         body: JSON.stringify({
-          avatar: `${avatarInputValue}`,
+          avatar: data.avatar,
         }),
       }).then(this._checkResponse);
     }
@@ -67,13 +67,13 @@ export default class Api {
       }).then(this._checkResponse);
     }
 
-     editProfileInfo(nameInputValue, professionInputValue) {
+     editProfileInfo(data) {
       return fetch(`${this._baseUrl}users/me`, {
         method: "PATCH",
         headers: this._headers,
         body: JSON.stringify({
-          name: `${nameInputValue}`,
-          about: `${professionInputValue}`,
+          name: data.name,
+          about: data.about,
         }),
       }).then(this._checkResponse);
     }
