@@ -218,7 +218,7 @@ buttonEdit.addEventListener("click", () => {
   const profile = userInfo.getUserInfo();
   editProfileInputs({
     name: profile.name,
-    about: profile.about,
+    about: profile.profession,
   });
   submitProfileForm.open();
 });
