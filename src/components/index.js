@@ -36,15 +36,6 @@ import { enableValidation, toggleButtonState } from "./validate.js";
 
 // import { like, deleteCardFromDom } from "./card.js";
 
-// import {
-//   openPopup,
-//   // closePopup,
-//   // submitProfileForm,
-//   // handlePlaceFormSubmit,
-//   // handleAvatarFormSubmit,
-//   showEditBtn,
-//   hiddenEditBtn,
-// } from "./modal.js";
 
 import { updateUserInfo, renderItems } from "../utils/utils.js";
 
