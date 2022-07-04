@@ -135,8 +135,10 @@ const handlePlaceFormSubmit = new PopupWithForm({
   popupSelector: ".popup_add",
   submitProfileForm: (popupData) => {
     handlePlaceFormSubmit.renderLoading(true);
+
     api
       .addCard(popupData)
+      
       .then((popupData) => {
         cardsList.addItem(createCard(popupData));
         handlePlaceFormSubmit.close();
@@ -163,6 +165,7 @@ const handleAvatarFormSubmit = new PopupWithForm({
   popupSelector: ".popup_avatar-edit",
   submitProfileForm: (popupData) => {
     handlePlaceFormSubmit.renderLoading(true);
+    
     api
       .editAvatar(popupData)
       .then((popupData) => {
@@ -186,12 +189,13 @@ editAvatarBtn.addEventListener("click", () => {
 //попап с профилем
 const submitProfileForm = new PopupWithForm({
   popupSelector: ".popup_edit",
-  submitProfileForm: (popupData) => {
+  submitProfileForm: (profileData) => {
     handlePlaceFormSubmit.renderLoading(true);
+    
     api
-      .editProfileInfo(popupData)
-      .then((userData) => {
-        userInfo.setUserInfo(userData);
+      .editProfileInfo(profileData)
+      .then((profileData) => {
+        userInfo.setUserInfo(profileData);
         submitProfileForm.close();
       })
       .catch((err) => {
@@ -205,16 +209,16 @@ const submitProfileForm = new PopupWithForm({
 submitProfileForm.setEventListeners();
 
 //заносим данные из инпутов в профиль
-function editProfileInputs({ name, profession }) {
+function editProfileInputs({ name, about }) {
   nameInput.value = name;
-  professionInput.value = profession;
+  professionInput.value = about;
 }
 
 buttonEdit.addEventListener("click", () => {
   const profile = userInfo.getUserInfo();
   editProfileInputs({
     name: profile.name,
-    profession: profile.profession,
+    about: profile.about,
   });
   submitProfileForm.open();
 });
