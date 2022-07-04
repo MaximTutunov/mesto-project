@@ -1,62 +1,68 @@
 export default class FormValidator{
-    constructor(){
-        this._api = api;
-        this._formIndividual = _formIndividual;
-        this._buttonElement = this._formIndividual.querySelector(this._api.submitButtonSelector)ö
+    constructor(config, formIndividual){
+        this._config = config;
+        this._formIndividual = formIndividual;
+        this._inputList = Array.from(this._formIndividual.querySelectorAll(this._config.inputSelector));
+        this._buttonElement = this._formIndividual.querySelector(this._config.submitButtonSelector);
     }
 
     //показываем валидацию
-     _displayInputError (inputElement, validationMessage ) {
-        const errorElement = this._inputElement.querySelector(`#${inputElement.id}-error`);
-        inputElement.classList.add(this._api.inputErrorClass);
-        errorElement.classList.add(this._api.errorClass);
-        errorElement.textContent = validationMessage;
+     _displayInputError (inputElement, validationMessage) {
+        const errorElement = this._formIndividual.querySelector(`#${inputElement.id}-error`);
+        console.log(errorElement);
+        inputElement.classList.add(this._config.inputErrorClass);
+        errorElement.classList.add(this._config.errorClass);
+        errorElement.textContent =  validationMessage;
       };
 
       //убираем валидацию
-      _hideInputError(inputElement, subConfig){
+      _hideInputError(inputElement){
         const errorElement = this._formIndividual.querySelector(`#${inputElement.id}-error`);
-        inputElement.classList.remove(this._api.inputErrorClass);
-        errorElement.classList.remove(this._api.errorClass);
+        inputElement.classList.remove(this._config.inputErrorClass);
+        errorElement.classList.remove(this._config.errorClass);
         errorElement.textContent = "";
       }
 
       //проверяем инпуты и показываем либо прячем валидацию
-      _checkInputValidity(formIndividual, inputElement){
+      _checkInputValidity(inputElement){
         if (inputElement.validity.valid) {
-          this._hideInputError(formIndividual, inputElement.validationMessage);
+          this._hideInputError(inputElement, inputElement.validationMessage);
         } else {
           this._displayInputError(inputElement);
         }
       };
 
       //если хотя бы в одном импуте ошибка возвращаем false в параметр валидации validity.valid
-      _hasInvalidInput(formIndividuals){
-        return formIndividuals.some((formIndividual) => {
-          return !formIndividual.validity.valid;
+      _hasInvalidInput(){
+        return this._inputList.some((inputItem) => {
+          return !inputItem.validity.valid;
         });
       };
 
       //убираем или добавляем модификаторы кнопки, а также параметр disabled в зависимости от проверки
-      _toggleButtonState(){
+      toggleButtonState(){
        if (this._hasInvalidInput()){
-        this._buttonElement.classList.add(this._api.inactiveButtonClass);
-        buttonElement.disabled = true;
+        this._buttonElement.classList.add(this._config.inactiveButtonClass);
+        this._buttonElement.disabled = true;
        } else {
-        buttonElement.classList.remove(this._api.inactiveButtonClass);
-        buttonElement.disabled = false;
+        this._buttonElement.classList.remove(this._config.inactiveButtonClass);
+        this._buttonElement.disabled = false;
        }}
 
        //функция, которая будет отслеживать валидацию при введении данных
-       _setEventListeners(formIndividual){
-        const inputList = Array.from(this._formIndividual.querySelectorAll(this._api.inputSelector));
-        this._toggleButtonState();
+       _setEventListeners(){
+        this.toggleButtonState();
         this._inputList.forEach((inputElement) => {
           inputElement.addEventListener("input", () => {
-            this._checkInputValidity(formIndividual);
-            this._toggleButtonState();
+            this._checkInputValidity(inputElement);
+            this.toggleButtonState();
           });
         });
-      };
 
+      };
+      
+      //функция включения валидации
+      enableValidation() {
+        this._setEventListeners();
+      }
     }

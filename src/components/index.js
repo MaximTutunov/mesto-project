@@ -1,3 +1,4 @@
+import FormValidator from "./FormValidator.js";
 import "../pages/index.css";
 import Section from "./section.js";
 import Card from "./card";
@@ -28,11 +29,12 @@ import {
   editAvatarBtnActive,
   popupAvatar,
   avatarForm,
+  config
 } from "./constants.js";
 
 //import of functions
 
-import { enableValidation, toggleButtonState } from "./validate.js";
+//import { enableValidation, toggleButtonState } from "./validate.js";
 
 // import { like, deleteCardFromDom } from "./card.js";
 
@@ -144,6 +146,7 @@ const handlePlaceFormSubmit = new PopupWithForm({
 });
 handlePlaceFormSubmit.setEventListeners();
 buttonAdd.addEventListener("click", () => {
+  formElementAddCardValidator.toggleButtonState();
   handlePlaceFormSubmit.open();
 });
 
@@ -174,6 +177,7 @@ const handleAvatarFormSubmit = new PopupWithForm({
 
 handleAvatarFormSubmit.setEventListeners();
 editAvatarBtn.addEventListener("click", () => {
+  avatarFormValidator.toggleButtonState();
   handleAvatarFormSubmit.open();
 });
 
@@ -214,16 +218,32 @@ buttonEdit.addEventListener("click", () => {
   submitProfileForm.open();
 });
 
+
+function showEditBtn(editImage) {
+  editImage.classList.add("profile__change-avatar_active");
+}
+function hiddenEditBtn(editImage) {
+  editImage.classList.remove("profile__change-avatar_active");
+}
+
+editAvatarBtn.addEventListener("mouseover", () => {
+  showEditBtn(editAvatarBtnActive);
+});
+editAvatarBtn.addEventListener("mouseout", () => {
+  hiddenEditBtn(editAvatarBtnActive);
+});
+
+
 /*--------------------------------------------------------*/
 
 
-// enabling validation
-
-enableValidation({
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__button",
-  inactiveButtonClass: "popup__button_disabled",
-  inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__error_visible",
-});
+/* Валидация форм */
+// валидация формы редактирования профиля
+const formProfileElementValidator = new FormValidator(config, formProfileElement);
+formProfileElementValidator.enableValidation();
+// валидация формы добавления новой карточки
+const formElementAddCardValidator = new FormValidator(config, formElementAddCard);
+formElementAddCardValidator.enableValidation();
+// Валидация формы редактирования аватара пользователя
+const avatarFormValidator = new FormValidator(config, avatarForm);
+avatarFormValidator.enableValidation();
