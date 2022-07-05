@@ -191,6 +191,7 @@ const submitProfileForm = new PopupWithForm({
       .editProfileInfo(profileData)
       .then((profileData) => {
         userInfo.setUserInfo(profileData);
+
         submitProfileForm.close();
       })
       .catch((err) => {

@@ -24,11 +24,10 @@ export default class FormValidator{
 
       //проверяем инпуты и показываем либо прячем валидацию
       _checkInputValidity(inputElement){
-        if (
-          inputElement.validity.valid) {
-          this._hideInputError(inputElement, inputElement.validationMessage);
+        if (inputElement.validity.valid) {
+          this._hideInputError(inputElement);
         } else {
-          this._displayInputError(inputElement);
+          this._displayInputError(inputElement, inputElement.validationMessage);
         }
       };
 
@@ -52,7 +51,7 @@ export default class FormValidator{
        //функция, которая будет отслеживать валидацию при введении данных
        _setEventListeners(){
         this.toggleButtonState();
-        this._inputList.forEach((inputElement) => {
+        this._inputList.forEach((inputElement) => {    
           inputElement.addEventListener("input", () => {
             this._checkInputValidity(inputElement);
             this.toggleButtonState();
@@ -61,8 +60,24 @@ export default class FormValidator{
 
       };
       
+      _removeEventListeners(){
+        this.toggleButtonState();
+        this._inputList.forEach((inputElement) => {    
+          inputElement.addEventListener("input", () => {
+            this._hideInputError(inputElement);
+            this.toggleButtonState();
+          });
+        });
+      };
+
       //функция включения валидации
       enableValidation() {
         this._setEventListeners();
       }
+
+      disableValidation(){
+        this._removeEventListeners();
+      }  
     }
+
+  
