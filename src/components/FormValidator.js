@@ -7,12 +7,11 @@ export default class FormValidator{
     }
 
     //показываем валидацию
-     _displayInputError (inputElement, validationMessage) {
+     _displayInputError (inputElement, errorMessage) {
         const errorElement = this._formIndividual.querySelector(`#${inputElement.id}-error`);
-        console.log(errorElement);
         inputElement.classList.add(this._config.inputErrorClass);
         errorElement.classList.add(this._config.errorClass);
-        errorElement.textContent =  validationMessage;
+        errorElement.textContent =  errorMessage;
       };
 
       //убираем валидацию
@@ -25,7 +24,8 @@ export default class FormValidator{
 
       //проверяем инпуты и показываем либо прячем валидацию
       _checkInputValidity(inputElement){
-        if (inputElement.validity.valid) {
+        if (
+          inputElement.validity.valid) {
           this._hideInputError(inputElement, inputElement.validationMessage);
         } else {
           this._displayInputError(inputElement);
@@ -34,8 +34,8 @@ export default class FormValidator{
 
       //если хотя бы в одном импуте ошибка возвращаем false в параметр валидации validity.valid
       _hasInvalidInput(){
-        return this._inputList.some((inputItem) => {
-          return !inputItem.validity.valid;
+        return this._inputList.some((inputElement) => {
+          return !inputElement.validity.valid;
         });
       };
 

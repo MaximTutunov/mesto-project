@@ -215,6 +215,7 @@ buttonEdit.addEventListener("click", () => {
     name: profile.name,
     about: profile.profession,
   });
+  formProfileElementValidator.toggleButtonState();
   submitProfileForm.open();
 });
 
