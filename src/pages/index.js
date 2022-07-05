@@ -1,45 +1,26 @@
-import FormValidator from "./FormValidator.js";
+import FormValidator from "../components/FormValidator.js";
 import "../pages/index.css";
-import Section from "./section.js";
-import Card from "./card";
-import Api from "./api.js";
-
-import Popup from "./popup.js";
-import PopupWithForm from "./PopupWithForm.js";
-import UserInfo from "./UserInfo.js";
+import Section from "../components/section.js";
+import Card from "../components/card";
+import Api from "../components/api.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 //import of constants
 
 import {
-  popupEdit,
   buttonEdit,
   buttonAdd,
-  profileName,
-  profileProfession,
   formProfileElement,
   nameInput,
   profileAvatar,
   professionInput,
-  popupReset,
-  formEdit,
-  buttonElementAdd,
-  inactiveButtonClassAdd,
   formElementAddCard,
   editAvatarBtn,
   editAvatarBtnActive,
-  popupAvatar,
   avatarForm,
-  config
-} from "./constants.js";
-
-//import of functions
-
-//import { enableValidation, toggleButtonState } from "./validate.js";
-
-// import { like, deleteCardFromDom } from "./card.js";
-
-
-import { updateUserInfo, renderItems } from "../utils/utils.js";
+  config,
+} from "../utils/constants.js";
 
 const api = new Api({
   baseUrl: "https://mesto.nomoreparties.co/v1/plus-cohort-10/",
@@ -131,7 +112,7 @@ const handlePlaceFormSubmit = new PopupWithForm({
 
     api
       .addCard(popupData)
-      
+
       .then((popupData) => {
         cardsList.addItem(createCard(popupData));
         handlePlaceFormSubmit.close();
@@ -159,7 +140,7 @@ const handleAvatarFormSubmit = new PopupWithForm({
   popupSelector: ".popup_avatar-edit",
   submitProfileForm: (popupData) => {
     handlePlaceFormSubmit.renderLoading(true);
-    
+
     api
       .editAvatar(popupData)
       .then((popupData) => {
@@ -186,7 +167,7 @@ const submitProfileForm = new PopupWithForm({
   popupSelector: ".popup_edit",
   submitProfileForm: (profileData) => {
     handlePlaceFormSubmit.renderLoading(true);
-    
+
     api
       .editProfileInfo(profileData)
       .then((profileData) => {
@@ -220,7 +201,6 @@ buttonEdit.addEventListener("click", () => {
   submitProfileForm.open();
 });
 
-
 function showEditBtn(editImage) {
   editImage.classList.add("profile__change-avatar_active");
 }
@@ -235,16 +215,20 @@ editAvatarBtn.addEventListener("mouseout", () => {
   hiddenEditBtn(editAvatarBtnActive);
 });
 
-
 /*--------------------------------------------------------*/
-
 
 /* Валидация форм */
 // валидация формы редактирования профиля
-const formProfileElementValidator = new FormValidator(config, formProfileElement);
+const formProfileElementValidator = new FormValidator(
+  config,
+  formProfileElement
+);
 formProfileElementValidator.enableValidation();
 // валидация формы добавления новой карточки
-const formElementAddCardValidator = new FormValidator(config, formElementAddCard);
+const formElementAddCardValidator = new FormValidator(
+  config,
+  formElementAddCard
+);
 formElementAddCardValidator.enableValidation();
 // Валидация формы редактирования аватара пользователя
 const avatarFormValidator = new FormValidator(config, avatarForm);

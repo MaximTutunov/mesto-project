@@ -7,21 +7,19 @@ export default class PopupWithForm extends Popup {
     this._buttonSave = this._formEdit.querySelector(".popup__button");
     this._inputList = this._formEdit.querySelectorAll(".popup__input");
   }
-  
+
   //сббор данных из полей формы
   _getInputValues() {
     this._inputValues = {};
-    this._inputList.forEach(item => {
+    this._inputList.forEach((item) => {
       this._inputValues[item.name] = item.value;
     });
     return this._inputValues;
   }
 
-
-  
   setEventListeners() {
     super.setEventListeners();
-    this._formEdit.addEventListener('submit', (evt) => {
+    this._formEdit.addEventListener("submit", (evt) => {
       evt.preventDefault();
       this._submitProfileForm(this._getInputValues());
     });
@@ -33,10 +31,10 @@ export default class PopupWithForm extends Popup {
   }
 
   renderLoading(isLoad) {
-        if (isLoad) {
+    if (isLoad) {
       this._buttonSave.textContent = "Сохранение...";
     } else {
-        this._buttonSave.textContent = "Сохранить";
+      this._buttonSave.textContent = "Сохранить";
     }
-}
+  }
 }

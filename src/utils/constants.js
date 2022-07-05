@@ -62,7 +62,7 @@ export const config = {
   inactiveButtonClass: "popup__button_disabled",
   inputErrorClass: "popup__input_type_error",
   errorClass: "popup__error_visible",
-}
+};
 
 export {
   popupEdit,
@@ -98,4 +98,4 @@ export {
   avatarForm,
   avatarInput,
   popupSaveAvatarButton,
-  };
+};

@@ -19,7 +19,7 @@ export default class Card {
     this._likeHandler = likeHandler;
     this._deleteHandler = deleteHandler;
     this._cardSelector = cardSelector;
-    this._deleteLike =  deleteLike;
+    this._deleteLike = deleteLike;
     this._setLike = setLike;
   }
 
@@ -34,12 +34,17 @@ export default class Card {
 
   //создаем метод создания карточки
   createCard() {
-    this._cardElement = this._getTemplate(); 
+    this._cardElement = this._getTemplate();
     this._cardImage = this._cardElement.querySelector(".gallery__photo");
-    this._likeCount = this._cardElement.querySelector(".gallery__likes-counter");
-    this._deleteButton = this._cardElement.querySelector(".gallery__button-del");
+    this._likeCount = this._cardElement.querySelector(
+      ".gallery__likes-counter"
+    );
+    this._deleteButton = this._cardElement.querySelector(
+      ".gallery__button-del"
+    );
     this._likeButton = this._cardElement.querySelector(".gallery__button-like");
-    this._cardElement.querySelector(".gallery__caption").textContent = this._name;
+    this._cardElement.querySelector(".gallery__caption").textContent =
+      this._name;
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
     this._likeCount.textContent = this._likes.length;
@@ -48,23 +53,23 @@ export default class Card {
     this._isOwnerLike();
     this._setEventListeners();
     return this._cardElement;
-     }
+  }
 
-    //если карточку не создал юсер, убираем кнопку удаления
-   _hasdeleteButton(){
-    if (this._userId !== this._cardOwnerID){
-        this._deleteButton.remove();
+  //если карточку не создал юсер, убираем кнопку удаления
+  _hasdeleteButton() {
+    if (this._userId !== this._cardOwnerID) {
+      this._deleteButton.remove();
     }
   }
 
   // Метод удаления карточки
-  deleteCardFromDom(){
+  deleteCardFromDom() {
     this._cardElement.remove();
     this._cardElement = null;
   }
 
   //если лайков 0, то убираем счетчик
-  _deleteZeroLikes(){
+  _deleteZeroLikes() {
     if (this._likes.length > 0) {
       this._likeCount.textContent = `${this._likes.length}`;
     } else {
@@ -72,45 +77,41 @@ export default class Card {
     }
   }
 
-//если лайк поставил юсер, то закрашиваем
-  _isOwnerLike(){
+  //если лайк поставил юсер, то закрашиваем
+  _isOwnerLike() {
     if (this._likes.some((elem) => this._userId === elem._id)) {
       this._likeButton.classList.add("gallery__button-liked");
     }
   }
 
-
-// поставить/удалить лайк, изменение количества лайков
-likeSwitcher (data) {
-  this._likes = data.likes;
-  if (this._likes.length > 0) {
-    this._likeCount.textContent = this._likes.length;
-  } else {
-    this._likeCount.textContent = "";
-  }
-  this._likeButton.classList.toggle('gallery__button-liked');
-}
-
-
-//слушатель
-  _setEventListeners(){
-//слушатель попапа с картинкой
-    this._cardImage.addEventListener('click', () => {
-    this._handleCardClick(this._name, this._link);
-  })
-  // слушатель кнопки удаления карточки
-  this._deleteButton.addEventListener('click', () => {
-    this._deleteHandler(this._cardID);
-  })
-  //слушатель лайка
-  this._likeButton.addEventListener('click', () => {
-    if (this._likeButton.classList.contains('gallery__button-liked')){
-      this._deleteLike(this._cardID);
-    }else{
-      this._setLike(this._cardID);
+  // поставить/удалить лайк, изменение количества лайков
+  likeSwitcher(data) {
+    this._likes = data.likes;
+    if (this._likes.length > 0) {
+      this._likeCount.textContent = this._likes.length;
+    } else {
+      this._likeCount.textContent = "";
     }
-  })
+    this._likeButton.classList.toggle("gallery__button-liked");
   }
 
-
+  //слушатель
+  _setEventListeners() {
+    //слушатель попапа с картинкой
+    this._cardImage.addEventListener("click", () => {
+      this._handleCardClick(this._name, this._link);
+    });
+    // слушатель кнопки удаления карточки
+    this._deleteButton.addEventListener("click", () => {
+      this._deleteHandler(this._cardID);
+    });
+    //слушатель лайка
+    this._likeButton.addEventListener("click", () => {
+      if (this._likeButton.classList.contains("gallery__button-liked")) {
+        this._deleteLike(this._cardID);
+      } else {
+        this._setLike(this._cardID);
+      }
+    });
+  }
 }
