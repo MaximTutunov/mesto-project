@@ -83,7 +83,7 @@ const createCard = (data) => {
       api
         .setLike(cardID)
         .then((data) => {
-          card.likeSwitcher(data);
+          card.updateLikes(data);
         })
         .catch((err) => {
           console.log(`Ошибка: ${err}`);
@@ -93,7 +93,7 @@ const createCard = (data) => {
       api
         .deleteLike(cardID)
         .then((data) => {
-          card.likeSwitcher(data);
+          card.updateLikes(data);
         })
         .catch((err) => {
           console.log(`Ошибка: ${err}`);
@@ -139,7 +139,7 @@ popupImage.setEventListeners();
 const handleAvatarFormSubmit = new PopupWithForm({
   popupSelector: ".popup_avatar-edit",
   submitProfileForm: (popupData) => {
-    handlePlaceFormSubmit.renderLoading(true);
+    handleAvatarFormSubmit.renderLoading(true);
 
     api
       .editAvatar(popupData)
@@ -151,7 +151,7 @@ const handleAvatarFormSubmit = new PopupWithForm({
         console.log(`Ошибка: ${err}`);
       })
       .finally(() => {
-        handlePlaceFormSubmit.renderLoading(false);
+        handleAvatarFormSubmit.renderLoading(false);
       });
   },
 });
@@ -166,20 +166,19 @@ editAvatarBtn.addEventListener("click", () => {
 const submitProfileForm = new PopupWithForm({
   popupSelector: ".popup_edit",
   submitProfileForm: (profileData) => {
-    handlePlaceFormSubmit.renderLoading(true);
+    submitProfileForm.renderLoading(true);
 
     api
       .editProfileInfo(profileData)
       .then((profileData) => {
         userInfo.setUserInfo(profileData);
-
         submitProfileForm.close();
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
       })
       .finally(() => {
-        handlePlaceFormSubmit.renderLoading(false);
+        handleAvatarFormSubmit.renderLoading(false);
       });
   },
 });

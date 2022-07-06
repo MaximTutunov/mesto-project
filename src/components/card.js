@@ -85,7 +85,7 @@ export default class Card {
   }
 
   // поставить/удалить лайк, изменение количества лайков
-  likeSwitcher(data) {
+  updateLikes(data) {
     this._likes = data.likes;
     if (this._likes.length > 0) {
       this._likeCount.textContent = this._likes.length;
