@@ -3,6 +3,7 @@ export default class Section {
     this._renderer = renderer;
     this._cardsContainer = document.querySelector(containerSelector);
   }
+
   renderItems(cards) {
     cards.forEach((card) => this._renderer(card));
   }

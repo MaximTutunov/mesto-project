@@ -23,7 +23,7 @@ export default class Card {
     this._setLike = setLike;
   }
 
-  //берем tmplate елемента
+  //берем tmplate элемента
   _getTemplate() {
     this._templatElement = document
       .querySelector(this._cardSelector)
@@ -32,7 +32,7 @@ export default class Card {
     return this._templatElement;
   }
 
-  //создаем метод создания карточки
+  // метод создания карточки
   createCard() {
     this._cardElement = this._getTemplate();
     this._cardImage = this._cardElement.querySelector(".gallery__photo");
@@ -55,7 +55,7 @@ export default class Card {
     return this._cardElement;
   }
 
-  //если карточку не создал юсер, убираем кнопку удаления
+  //если карточку не создал юзер, убираем кнопку удаления
   _hasdeleteButton() {
     if (this._userId !== this._cardOwnerID) {
       this._deleteButton.remove();
@@ -77,7 +77,7 @@ export default class Card {
     }
   }
 
-  //если лайк поставил юсер, то закрашиваем
+  //если лайк поставил юзер, то закрашиваем
   _isOwnerLike() {
     if (this._likes.some((elem) => this._userId === elem._id)) {
       this._likeButton.classList.add("gallery__button-liked");
