@@ -178,7 +178,7 @@ const submitProfileForm = new PopupWithForm({
         console.log(`Ошибка: ${err}`);
       })
       .finally(() => {
-        handleAvatarFormSubmit.renderLoading(false);
+        submitProfileForm.renderLoading(false);
       });
   },
 });
