@@ -55,6 +55,15 @@ const inactiveButtonClassAdd = "popup__button_disabled";
 const imagePopup = popupImage.querySelector(".popup__image");
 const imageCapture = popupImage.querySelector(".popup__image-capture");
 
+export const config = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "popup__button_disabled",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__error_visible",
+};
+
 export {
   popupEdit,
   buttonEdit,
